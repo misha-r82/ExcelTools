@@ -17,6 +17,7 @@ namespace ExcelTools
         static Current()
         {
             CurRegion = new CurRegion();
+            CurRegion.Reload();
         }
     }
     public class CurRegion : INotifyPropertyChanged
@@ -78,9 +79,9 @@ namespace ExcelTools
                 OnPropertyChanged();
             }
         }
-        private void ApplicationOnSheetSelectionChange(object sh, Range target)
-        {
 
+        public void Reload()
+        {
             _selection = (Range)ThisWorkbook.app.Selection;
             _activeCell = ThisWorkbook.app.ActiveCell;
             _curRng = _activeCell.CurrentRegion;
@@ -91,8 +92,11 @@ namespace ExcelTools
             lastCol = firstCol + _curRng.Columns.Count;
             _activeRow = Selection.Rows.Count != 1 || CurRng.Count == 1 ? null : new ActiveRow(ActiveCell);
             OnPropertyChanged(nameof(ExcelTools.ActiveRow));
-            OnPropertyChanged(nameof(CurRowNumInRng));
-
+            OnPropertyChanged(nameof(CurRowNumInRng));            
+        }
+        private void ApplicationOnSheetSelectionChange(object sh, Range target)
+        {
+            Reload();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
