@@ -1,0 +1,205 @@
+﻿<UserControl x:Class="ExcelTools.WpfCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExcelTools"
+             xmlns:conv="clr-namespace:ExcelTools.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+<UserControl.Resources>
+        <Style TargetType="{x:Type Control}" x:Key="ElementStyle">
+            <Setter Property="Margin" Value="3,3,0,3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource ElementStyle}"/>
+        <Style TargetType="xctk:DateTimePicker" BasedOn="{StaticResource ElementStyle}"/>
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+            <Setter Property="Margin" Value="3,3,0,3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ElementStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource ElementStyle}" x:Key="SqareButton">
+        <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+    </UserControl.Resources>
+        <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Строки" Name="tabRows">
+                <StackPanel>
+                    <StackPanel.Resources>
+                    <local:ActiveRowTemplateSelector x:Key="ActiveRowTemplateSelector"/>
+                    <conv:TimeToDateConverter x:Key="TimeConverter"/>
+                        <conv:TestConverter x:Key="TestConverter"/>
+                </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Строк автоподстановки" ToolTip="Количество строк, используемых для формирования списка автоподстановки для поля"/>
+                        <xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}"/>                        
+                    </StackPanel>
+                <ListBox Name="lstActiveRow" ItemsSource="{Binding Source={x:Static local:Current.CurRegion}, Path=ActiveRow}" 
+                         ItemTemplateSelector="{StaticResource ActiveRowTemplateSelector}">
+                    <ListBox.Resources>
+                        <DataTemplate x:Key="StrCellTemplate">
+                            <StackPanel>
+                                <TextBlock Text="{Binding ColName}"/>
+                                <ComboBox Text="{Binding StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate x:Key="NumericCellTemplate">
+                            <StackPanel>
+                                <TextBlock Text="{Binding ColName}"/>
+                                <ComboBox Text="{Binding NumVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate x:Key="DateTimeCellTemplate">
+                            <StackPanel>
+                                <TextBlock Text="{Binding ColName}"/>
+                                <xctk:DateTimePicker Value="{Binding DateVal}" Format="ShortDate" Width="100"/>
+                            </StackPanel>
+                        </DataTemplate>
+                        <DataTemplate x:Key="TimeCellTemplate">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ColName}"/>
+                                <ComboBox IsEditable="True" Text="{Binding TimeVal, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.Resources>
+                </ListBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="btnFrist" Click="BtnFrist_OnClick" Style="{StaticResource SqareButton}">
+                            <Image Source="img/double_arrow_left.png"/>
+                        </Button>
+                    <Button Name="btnPrev" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                            <Image Source="img/arrow_left.png" />
+                        </Button>
+                    <TextBox Text="{Binding Source={x:Static local:Current.CurRegion}, Path=CurRowNumInRng}" Width="65"/>
+                    <Button Name="btnNext" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                            <Image Source="img/arrow_right.png" />
+                        </Button>
+                    <Button Name="btnLast" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                            <Image Source="img/double_arrow_right.png"/>
+                        </Button>
+                    <Button Name="btnNewRow" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                            <Image Source="img/asterisk.png" Margin="1" />
+                        </Button>
+                </StackPanel>
+            </StackPanel>
+
+            </TabItem>
+            <TabItem Header="Фильтры">
+                  <Grid>
+                <Grid.Resources>
+                    <local:FilterTemplateSelector x:Key="FilterTemplateSelector"/>
+                </Grid.Resources>
+                <StackPanel>
+                    <ListBox Name="lstFilters" ItemsSource="{Binding Filters}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
+                        <ListBox.Resources>
+                            <DataTemplate x:Key="StrFilterTemplate">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
+                                        </StackPanel.Resources>
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="Между"/>
+                                    </StackPanel>
+                                    <TextBox Grid.Column="1" Text="{Binding Patt}" Width="150"/>
+                                </Grid>
+                            </DataTemplate>
+                            <DataTemplate x:Key="NumericFilterTemplate">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
+                                        </StackPanel.Resources>
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="Между"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                        <StackPanel.Resources>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
+                                        </StackPanel.Resources>
+                                        <TextBox Text="{Binding From}" Width="110"/>
+                                        <TextBlock Text=" и "/>
+                                        <TextBox Text="{Binding To}" Width="110"/>
+                                    </StackPanel>
+                                </Grid>
+
+                            </DataTemplate>
+                            <DataTemplate x:Key="DateTimeFilterTemplate">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
+                                        </StackPanel.Resources>
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="Между"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1">
+                                        <xctk:DateTimePicker Value="{Binding From, StringFormat=dd.MM.yyyy}" Width="100"/>
+                                        <TextBlock Text=" и "/>
+                                        <xctk:DateTimePicker Value="{Binding To, StringFormat=dd.MM.yyyy}" Width="100"/>                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                            <DataTemplate x:Key="TimeFilterTemplate">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
+                                        </StackPanel.Resources>
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="Между"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1">
+                                        <xctk:TimePicker TimeInterval="{Binding From, StringFormat=dd.MM.yyyy}" Width="100"/>
+                                        <TextBlock Text=" и "/>
+                                        <xctk:TimePicker TimeInterval="{Binding To, StringFormat=dd.MM.yyyy}" Width="100"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.Resources>
+                    </ListBox>
+                    <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="17,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+                    <TextBox Name="txtText" Margin="-1,0,1.117,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Между" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBox Text="{Binding From}" Width="100"/>
+                        <TextBlock Text=" и "/>
+                        <TextBox Text="{Binding To}" Width="100"/>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+            </Grid>
+        </TabItem>
+   
+        </TabControl>
+        
+</UserControl>
