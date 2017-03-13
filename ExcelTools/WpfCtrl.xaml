@@ -38,10 +38,17 @@
                         <xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}"/>                        
                     </StackPanel>
                 <ListBox Name="lstActiveRow" ItemsSource="{Binding Source={x:Static local:Current.CurRegion}, Path=ActiveRow}" 
-                         ItemTemplateSelector="{StaticResource ActiveRowTemplateSelector}">
+                         ItemTemplateSelector="{StaticResource ActiveRowTemplateSelector}" >
                     <ListBox.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="IsTabStop" Value="False" />
+                        </Style>
+                        <Style TargetType="ListBox" >
+                            <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+                        </Style>
                         <DataTemplate x:Key="StrCellTemplate">
-                            <StackPanel>
+                            <StackPanel >
                                 <TextBlock Text="{Binding ColName}"/>
                                 <ComboBox Text="{Binding StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
                             </StackPanel>
