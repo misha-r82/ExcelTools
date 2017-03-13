@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WsManager.CtrlWbks"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WsManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="DataGrid">
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Файлы Excel "/>
+            <Button Name="btnOpen" Content="Открыть" Click="BtnOpen_OnClick"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding }">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="книга" Binding="{Binding FileName}" Width="Auto"/>
+                <DataGridTextColumn Header="путь" Binding="{Binding DirName}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>
