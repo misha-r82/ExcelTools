@@ -76,8 +76,6 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                
-
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.Resources>
@@ -151,7 +149,7 @@
                                 </Grid>
 
                             </DataTemplate>
-                            <DataTemplate x:Key="DateTimeFilterTemplate">
+                            <DataTemplate x:Key="DateFilterTemplate">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>

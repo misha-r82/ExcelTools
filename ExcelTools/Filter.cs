@@ -13,7 +13,8 @@ namespace ExcelTools
     {
         public FilterProto(Range cells)
         {
-            Range region = cells.CurrentRegion;
+            FilterRng = Current.CurRegion.CurRng;
+            /*Range region = cells.CurrentRegion;
             int left = ((Range)region.Cells[0,0]).Column;
             ColNum = cells.Column - left;
             if (cells.Rows.Count == 1)
@@ -25,7 +26,7 @@ namespace ExcelTools
                 int bottom = top + cells.Rows.Count;
                 Worksheet ws = cells.Worksheet;
                 FilterRng = ws.get_Range(ws.Cells[top, left], ws.Cells[bottom, right]);
-            }
+            }*/
         }
         public bool Enabled { get; set; }
         private int ColNum { get; }
@@ -37,7 +38,7 @@ namespace ExcelTools
         }
         }
         private Range FilterRng { get; set; }
-        protected abstract object Criteria { get; }
+        protected virtual object Criteria { get; }
 
         public void SetFilter()
         {
@@ -77,21 +78,38 @@ namespace ExcelTools
             //SetFilter();
         }
     }
-    class DateTimeFilter : FilterProto
+    class DateFilter : FilterProto
     {
+        public DateFilter(Range cells) : base(cells)
+        {
+            {
+                From = DateTime.Now.AddDays(-1);
+                To = DateTime.Now;
+            }
+        }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-        public bool TimeMode { get; set; }
         protected override object Criteria
         {
             get { return new string[] { string.Format(">={0}", From), string.Format("<={0}", To) }; }
         }
 
-        public DateTimeFilter(Range cells) : base(cells)
+   
+    }
+
+    class TimeFilter : FilterProto
+    {
+        public TimeSpan From { get; set; }
+        public TimeSpan To { get; set; }
+        protected override object Criteria
         {
-            From = DateTime.Now.AddDays(-1);
-            To = DateTime.Now;
-            //SetFilter();
+            get { return new string[] { string.Format(">={0}", From), string.Format("<={0}", To) }; }
         }
+
+        public TimeFilter(Range cells) : base(cells)
+        {
+            From = new TimeSpan(0);
+            To = new TimeSpan(0,23,59,59);
+        }        
     }
 }

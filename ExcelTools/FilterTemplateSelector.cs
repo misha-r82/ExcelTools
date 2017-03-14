@@ -16,8 +16,8 @@ namespace ExcelTools
                 ContentPresenter pres = container as ContentPresenter;
                 if(item is StrFilter) return pres.FindResource("StrFilterTemplate") as DataTemplate;
                 if (item is NumericFilter) return pres.FindResource("NumericFilterTemplate") as DataTemplate;
-                if (item is DateTimeFilter) return pres.FindResource("DateTimeFilterTemplate") as DataTemplate;
-
+                if (item is DateFilter) return pres.FindResource("DateFilterTemplate") as DataTemplate;
+                if (item is TimeFilter) return pres.FindResource("TimeFilterTemplate") as DataTemplate;
                 return null;
             }
         

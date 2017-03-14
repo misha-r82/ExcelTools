@@ -46,7 +46,7 @@ namespace ExcelTools
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            var flt = FilterFactory.CreateFilter(Current.CurRegion.Selection);
+            var flt = FilterFactory.CreateFilter();
             if (flt != null) Filters.Add(flt);
             txtText.Text+= ((Range) ThisWorkbook.app.Selection).Value.GetType().ToString() + "\n";
             //Filters.Add(flt);

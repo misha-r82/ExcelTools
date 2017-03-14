@@ -12,18 +12,20 @@ namespace ExcelTools
     static class FilterFactory
     {
  
-        public static FilterProto CreateFilter(Range rng)
+        public static FilterProto CreateFilter()
         {
-            if (rng.Columns.Count > 1)
+            Range rng = Current.CurRegion.ActiveCell;
+            var activeCell = new Cell(rng, false);
+            
+            switch (activeCell.Type)
             {
-                MessageBox.Show("Допускается выбор только одного сталбца");
-                return null;
+                case CellTypes.str: return new StrFilter(rng);
+                case CellTypes.numeric: return new NumericFilter(rng);
+                case CellTypes.date: return new DateFilter(rng);
+                case CellTypes.time: return new TimeFilter(rng);
+                default: return new StrFilter(rng);
+
             }
-            object val = rng.Count == 1 ? rng.Value : ((Range)rng.Cells[1,0]).Value;
-            if (val is string) return new StrFilter(rng);
-            if (val is double) return new NumericFilter(rng);
-            if (val is DateTime) return new DateTimeFilter(rng);
-            return null;
             //
             //if (rng.v)
 
