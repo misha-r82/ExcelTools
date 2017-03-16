@@ -90,7 +90,7 @@ namespace ExcelTools
             firstCol = firstCell.Column;
             lastRow = firstRow + _curRng.Rows.Count -2;
             lastCol = firstCol + _curRng.Columns.Count;
-            _activeRow = Selection.Rows.Count != 1 || CurRng.Count == 1 ? null : new ActiveRow(ActiveCell);
+            _activeRow = new ActiveRow(ActiveCell);
             OnPropertyChanged(nameof(ExcelTools.ActiveRow));
             OnPropertyChanged(nameof(CurRowNumInRng));            
         }
