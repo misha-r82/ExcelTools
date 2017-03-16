@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExcelTools"
              xmlns:conv="clr-namespace:ExcelTools.Converters"
+             
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -23,6 +24,9 @@
         <Style TargetType="Button" BasedOn="{StaticResource ElementStyle}" x:Key="SqareButton">
         <Setter Property="Width" Value="20"/>
             <Setter Property="Height" Value="20"/>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         </Style>
     </UserControl.Resources>
         <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
@@ -111,18 +115,21 @@
                         <ListBox.Resources>
                             <DataTemplate x:Key="StrFilterTemplate">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel.Resources>
                                             <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
                                         </StackPanel.Resources>
                                         <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="Между"/>
+                                        <TextBlock Text="содержит"/>
                                     </StackPanel>
-                                    <TextBox Grid.Column="1" Text="{Binding Patt}" Width="150"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <CheckBox IsChecked="{Binding Enabled}"/>
+                                    </StackPanel>
+                                    <TextBox Grid.Row="1" Text="{Binding Patt}" HorizontalAlignment="Stretch"/>
                                 </Grid>
                             </DataTemplate>
                             <DataTemplate x:Key="NumericFilterTemplate">
