@@ -16,9 +16,9 @@ namespace ExcelTools
             Range curRng = cell.CurrentRegion;
             int colCount = curRng.Columns.Count;
             int row = cell.Row;
-            Debug.WriteLine(((Range)curRng.Cells[row, 1]).Address + " " + ((Range)curRng.Cells[row, 1]).Address);
             var ws = Current.CurRegion.ActiveWs;
-            var rowRng = ws.Range[ws.Cells[row, 1], ws.Cells[row, colCount]];
+            int firstCol = curRng.Column;
+            Range rowRng = ws.Range[ws.Cells[row, firstCol], ws.Cells[row, firstCol + colCount - 1]];
             return rowRng;
         }
     }
