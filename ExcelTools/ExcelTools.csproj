@@ -116,6 +116,9 @@
     <Compile Include="Cell.cs" />
     <Compile Include="ColRng.cs" />
     <Compile Include="Converters.cs" />
+    <Compile Include="CtrlFilters.xaml.cs">
+      <DependentUpon>CtrlFilters.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CurRegion.cs" />
     <Compile Include="ExTools.cs" />
     <Compile Include="Filter.cs" />
@@ -190,6 +193,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CtrlFilters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StylesDic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WpfCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

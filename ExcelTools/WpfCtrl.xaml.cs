@@ -30,29 +30,15 @@ namespace ExcelTools
     /// </summary>
     public partial class WpfCtrl : UserControl, INotifyPropertyChanged
     {
-        public ObservableCollection<FilterProto> Filters { get; set; }
-
-
         public WpfCtrl()
         {
             InitializeComponent();
-            Filters = new ObservableCollection<FilterProto>();
             DataContext = this;
             Current.CurRegion.PropertyChanged += (sender, args) =>
             { if (args.PropertyName == "CurRegion.Selection") lstActiveRow.Items.Refresh();};
-
-
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            var flt = FilterFactory.CreateFilter();
-            if (flt != null) Filters.Add(flt);
-            txtText.Text+= ((Range) ThisWorkbook.app.Selection).Value.GetType().ToString() + "\n";
-            //Filters.Add(flt);
-            //
 
-        }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -84,18 +70,6 @@ namespace ExcelTools
             }
         }
 
-        private void TimePicker_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            var timePicker = sender as Xceed.Wpf.Toolkit.TimePicker;
-            var tmp = UIHelper.GetChildOfType<ComboBox>(timePicker);
-        }
 
-        private void TimePicker_OnInitialized(object sender, EventArgs e)
-        {
-            var timePicker = sender as Xceed.Wpf.Toolkit.TimePicker;
-            FieldInfo fieldInfo = typeof(Xceed.Wpf.Toolkit.TimePicker).GetField("_timeListBox", BindingFlags.Instance | BindingFlags.NonPublic);
-            var tb = (System.Windows.Controls.ListBox)fieldInfo.GetValue(timePicker);
-
-        }
     }
 }
