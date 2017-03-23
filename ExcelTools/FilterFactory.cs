@@ -15,15 +15,15 @@ namespace ExcelTools
         public static FilterProto CreateFilter()
         {
             Range rng = Current.CurRegion.ActiveCell;
-            var activeCell = new Cell(rng, false);
+            var activeCell = new Cell(rng, true);
             
             switch (activeCell.Type)
             {
-                case CellTypes.str: return new StrFilter(rng);
-                case CellTypes.numeric: return new NumericFilter(rng);
-                case CellTypes.date: return new DateFilter(rng);
-                case CellTypes.time: return new TimeFilter(rng);
-                default: return new StrFilter(rng);
+                case CellTypes.str: return new StrFilter(activeCell);
+                case CellTypes.numeric: return new NumericFilter(activeCell);
+                case CellTypes.date: return new DateFilter(activeCell);
+                case CellTypes.time: return new TimeFilter(activeCell);
+                default: return new StrFilter(activeCell);
 
             }
             //

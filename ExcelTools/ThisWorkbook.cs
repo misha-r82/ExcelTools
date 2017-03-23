@@ -24,8 +24,9 @@ namespace ExcelTools
             //Add the user control to the actions pane
             aPane = new ActionsPaneControl();
             ActionsPane.Controls.Add(aPane);
-            aPane.Width = 200;
+            aPane.Width = 250;
             aPane.Visible = true;
+
         }
         private void ThisWorkbook_Startup(object sender, System.EventArgs e)
         {

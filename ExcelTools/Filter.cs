@@ -21,20 +21,8 @@ namespace ExcelTools
             FilterRng = Current.CurRegion.ActiveCell;
             int col = FilterRng.Column - Current.CurRegion.firstCol;
             Name = Current.CurRegion.ActiveRow.Cells[col].ColName;
-            ColNum = Current.CurRegion.firstCol;
-            /*Range region = cells.CurrentRegion;
-            int left = ((Range)region.Cells[0,0]).Column;
-            ColNum = cells.Column - left;
-            if (cells.Rows.Count == 1)
-                FilterRng = region;
-            else
-            {
-                int right = left + region.Columns.Count;
-                int top = ((Range) cells[0, 0]).Row;
-                int bottom = top + cells.Rows.Count;
-                Worksheet ws = cells.Worksheet;
-                FilterRng = ws.get_Range(ws.Cells[top, left], ws.Cells[bottom, right]);
-            }*/
+            ColNum =  col + 1;
+            Enabled = true;
         }
 
         public bool Enabled
@@ -45,8 +33,7 @@ namespace ExcelTools
                 if (_enabled == value) return;
                 _enabled = value;
                 OnPropertyChanged();
-                if (_enabled) SetFilter();
-                else RemoveFilter();
+                if (!_enabled) RemoveFilter();
             }
         }
 
@@ -54,59 +41,85 @@ namespace ExcelTools
         public string Name { get; }
         
         private Range FilterRng { get; set; }
-        protected virtual object Criteria { get; }
+        protected virtual object Criteria1 { get; }
+        protected virtual object Criteria2 { get; }
 
         public void SetFilter()
         {
-            FilterRng.AutoFilter(ColNum, Criteria);
+            if (Enabled)
+            {
+                if (Criteria2 == null) FilterRng.AutoFilter(ColNum, Criteria1);   
+                else FilterRng.AutoFilter(ColNum, Criteria1, XlAutoFilterOperator.xlAnd, Criteria2);
+            }
         }
         public void RemoveFilter()
         {
-            FilterRng.AutoFilter(ColNum, "");
+            FilterRng.AutoFilter(ColNum);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
+            SetFilter();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
     class StrFilter : FilterProto
     {
-        public string Patt { get; set; }
-        protected override object Criteria
+        private string _patt;
+
+        public string Patt
+        {
+            get { return _patt; }
+            set
+            {
+                if(_patt == value) return;
+                _patt = value;
+                OnPropertyChanged();
+                SetFilter();
+            }
+        }
+
+        protected override object Criteria1
         {
             get { return string.Format("*{0}*", Patt); }
         }
 
-        public StrFilter(Range cells) : base()
+        public StrFilter(Cell cell) : base()
         {
-            Patt = "1";
-            //SetFilter();
+            _patt = "";
         }
     }
 
     class NumericFilter : FilterProto
     {
-        public int From { get; set; }
-        public int To { get; set; }
+        public double From { get; set; }
+        public double To { get; set; }
 
-        protected override object Criteria
+        protected override object Criteria1
         {
-            get { return new string[] {string.Format(">={0}", From), string.Format("<={0}", To)}; }
+            get { return string.Format(">={0}", From); }
         }
-
-        public NumericFilter(Range cells) : base()
+        protected override object Criteria2
         {
-            From = 23;
-            To = 27;
-            //SetFilter();
+            get { return string.Format("<={0}", To); }
+        }
+        public NumericFilter(Cell cell) : base()
+        {
+            var values = cell.ValList.OfType<double>().ToArray();
+            if (values.Any())
+            {
+                From = values.Min();
+                To = values.Max();
+            }
+            else From = To = 0;
         }
     }
     class DateFilter : FilterProto
     {
-        public DateFilter(Range cells) : base()
+        public DateFilter(Cell cell) : base()
         {
             {
                 From = DateTime.Now.AddDays(-1);
@@ -115,27 +128,44 @@ namespace ExcelTools
         }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-        protected override object Criteria
+        protected override object Criteria1
         {
-            get { return new string[] { string.Format(">={0}", From), string.Format("<={0}", To) }; }
+            get { return string.Format(">={0}", From.ToString(@"MM\/dd\/yyyy")); }
+        }
+        protected override object Criteria2
+        {
+            get { return string.Format("<={0}", To.ToString(@"MM\/dd\/yyyy")); }
         }
 
-   
     }
 
     class TimeFilter : FilterProto
     {
         public TimeSpan From { get; set; }
         public TimeSpan To { get; set; }
-        protected override object Criteria
+        public TimeSpan[] ValList { get; private set; }
+        protected override object Criteria1
         {
-            get { return new string[] { string.Format(">={0}", From), string.Format("<={0}", To) }; }
+            get { return string.Format(">={0}", From); }
         }
-
-        public TimeFilter(Range cells) : base()
+        protected override object Criteria2
         {
-            From = new TimeSpan(0);
-            To = new TimeSpan(0,23,59,59);
+            get { return string.Format("<={0}", To); }
+        }
+        public TimeFilter(Cell cell) : base()
+        {
+            ValList = cell.ValList.OfType<TimeSpan>().ToArray();
+            if (ValList.Any())
+            {
+                From = ValList.Min();
+                To = ValList.Max();                
+            }
+            else
+            {
+                From = new TimeSpan(0);
+                To = new TimeSpan(23,59,59);
+            }
+
         }        
     }
 }

@@ -116,6 +116,9 @@
     <Compile Include="Cell.cs" />
     <Compile Include="ColRng.cs" />
     <Compile Include="Converters.cs" />
+    <Compile Include="CtrlCalk.xaml.cs">
+      <DependentUpon>CtrlCalk.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CtrlFilters.xaml.cs">
       <DependentUpon>CtrlFilters.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CtrlCalk.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CtrlFilters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

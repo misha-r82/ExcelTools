@@ -51,6 +51,7 @@ namespace ExcelTools
             this.Controls.Add(this.elementHost1);
             this.Name = "ActionsPaneControl";
             this.Size = new System.Drawing.Size(250, 800);
+            this.Width = 250;
             this.ResumeLayout(false);
 
         }

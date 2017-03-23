@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExcelTools"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:ExcelTools.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -28,16 +29,13 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
-                                </StackPanel.Resources>
                                 <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Text="содержит"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <CheckBox IsChecked="{Binding Enabled}"/>
                             </StackPanel>
-                            <TextBox Grid.Row="1" Text="{Binding Patt}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Row="1" Text="{Binding Patt, UpdateSourceTrigger=PropertyChanged, Delay=800}" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate x:Key="NumericFilterTemplate">
@@ -47,16 +45,13 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
-                                </StackPanel.Resources>
                                 <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Text="Между"/>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <CheckBox IsChecked="{Binding Enabled}"/>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal" Grid.Row="1">
-                                <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
-                                </StackPanel.Resources>
                                 <TextBox Text="{Binding From}" Width="110"/>
                                 <TextBlock Text=" и "/>
                                 <TextBox Text="{Binding To}" Width="110"/>
@@ -71,16 +66,16 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
-                                </StackPanel.Resources>
                                 <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Text="Между"/>
                             </StackPanel>
-                            <StackPanel Grid.Row="1">
-                                <xctk:DateTimePicker Value="{Binding From, StringFormat=dd.MM.yyyy}" Width="100"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <CheckBox IsChecked="{Binding Enabled}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <xctk:DateTimePicker Value="{Binding From}"  Format="ShortDate" Width="100"/>
                                 <TextBlock Text=" и "/>
-                                <xctk:DateTimePicker Value="{Binding To, StringFormat=dd.MM.yyyy}" Width="100"/>
+                                <xctk:DateTimePicker Value="{Binding To}"  Format="ShortDate" Width="100"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -91,16 +86,32 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
-                                </StackPanel.Resources>
                                 <TextBlock Text="{Binding Name}"/>
                                 <TextBlock Text="Между"/>
                             </StackPanel>
-                            <StackPanel Grid.Row="1">
-                                <xctk:TimePicker TimeInterval="{Binding From, StringFormat=dd.MM.yyyy}" Width="100"/>
-                                <TextBlock Text=" и "/>
-                                <xctk:TimePicker TimeInterval="{Binding To, StringFormat=dd.MM.yyyy}" Width="100"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <CheckBox IsChecked="{Binding Enabled}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <converters:TimeToDateConverter x:Key="TimeConverter"/>
+                                </StackPanel.Resources>
+                                <ComboBox IsEditable="True" Text="{Binding From, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <ComboBox IsEditable="True" Text="{Binding To, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
