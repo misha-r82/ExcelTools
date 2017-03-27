@@ -17,10 +17,11 @@ namespace ExcelTools
         private TimeSpan _timeVal;
         private DateTime _dateVal;
         private Range _rng;
-
+        private bool _isSelected;
 
         public CellTypes Type { get; }
         public object[] ValList { get; private set; }
+        public Range Rng { get { return _rng; } }
         public string ColName
         {
             get { return _colName; }
@@ -76,6 +77,16 @@ namespace ExcelTools
                 _strVal = value;
                 _rng.Value = value;
                 OnPropertyChanged(nameof(IsValid));
+            }
+        }
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value == IsSelected) return;
+                _isSelected = value;
+                OnPropertyChanged();
             }
         }
 
@@ -179,6 +190,7 @@ namespace ExcelTools
                 }
             }
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

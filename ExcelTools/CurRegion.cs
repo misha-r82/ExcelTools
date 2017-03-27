@@ -18,6 +18,7 @@ namespace ExcelTools
         {
             CurRegion = new CurRegion();
             CurRegion.Reload();
+            CurRegion.Wnd = 50;
         }
     }
     public class CurRegion : INotifyPropertyChanged

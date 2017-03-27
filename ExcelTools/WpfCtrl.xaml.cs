@@ -43,7 +43,6 @@ namespace ExcelTools
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-     
         }
 
 
@@ -66,10 +65,23 @@ namespace ExcelTools
                 case "btnLast": curReg.CurRowNumInRng = curReg.CurRng.Rows.Count; break;
                 case "btnNext": if (curReg.CurRowNumInRng < curReg.CurRng.Rows.Count -1) curReg.CurRowNumInRng++ ; break;
                 case "btnPrev": if(curReg.CurRowNumInRng > 1) curReg.CurRowNumInRng--; break;
-                case "btnNewRow": curReg.CurRowNumInRng = curReg.CurRng.Rows.Count; break;
+                case "btnNewRow": 
+                    var oldRow = curReg.ActiveRow;
+                    curReg.CurRowNumInRng = curReg.CurRng.Rows.Count;
+                    for (int i = 0; i < oldRow.Cells.Length; i++)
+                        if (oldRow.Cells[i].IsSelected)
+                            curReg.ActiveRow.Cells[i].Rng.Value2 = oldRow.Cells[i].Rng.Value2;
+                    break;
             }
         }
 
+
+        private void ChkAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            var val = chkAll.IsChecked == true;
+            foreach (Cell cell in Current.CurRegion.ActiveRow.Cells)
+                cell.IsSelected = val;
+        }
 
     }
 }

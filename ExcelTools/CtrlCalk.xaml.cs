@@ -31,7 +31,7 @@ namespace ExcelTools
                 object val = Current.CurRegion.ActiveCell.Value;
                 if (val is double || val is long)
                 {
-                    ctrlCalk.DisplayText = val.ToString();
+                        ctrlCalk.Value++;
                 }
             };
         }

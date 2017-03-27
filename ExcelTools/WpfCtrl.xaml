@@ -11,59 +11,103 @@
              d:DesignHeight="300" d:DesignWidth="300">
         <UserControl.Resources>
             <ResourceDictionary Source="StylesDic.xaml"/>
+            
         </UserControl.Resources>
         <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Строки" Name="tabRows">
                 <StackPanel>
                     <StackPanel.Resources>
-                    <local:ActiveRowTemplateSelector x:Key="ActiveRowTemplateSelector"/>
-                    <conv:TimeToDateConverter x:Key="TimeConverter"/>
+                        <local:ActiveRowTemplateSelector x:Key="ActiveRowTemplateSelector"/>
+                        <conv:TimeToDateConverter x:Key="TimeConverter"/>
                         <conv:TestConverter x:Key="TestConverter"/>
-                </StackPanel.Resources>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Строк автоподстановки" ToolTip="Количество строк, используемых для формирования списка автоподстановки для поля"/>
-                        <xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}"/>                        
-                    </StackPanel>
+                    </StackPanel.Resources>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Name="chkAll" Click="ChkAll_OnClick" Grid.Column="1" Margin="2" VerticalAlignment="Center"/>
+                </Grid>
                 <ListBox Name="lstActiveRow" ItemsSource="{Binding Source={x:Static local:Current.CurRegion}, Path=ActiveRow}" 
-                         ItemTemplateSelector="{StaticResource ActiveRowTemplateSelector}" >
+                         ItemTemplateSelector="{StaticResource ActiveRowTemplateSelector}" HorizontalContentAlignment="Stretch">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Focusable" Value="False"/>
                             <Setter Property="IsTabStop" Value="False" />
+                            <Setter Property="BorderBrush" Value="Gainsboro"/>
+                            <Setter Property="BorderThickness" Value="0.5"/>
                         </Style>
                         <Style TargetType="ListBox" >
                             <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
                         </Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+                            <Setter Property="Margin" Value="3"/>
+                            <Setter Property="VerticalAlignment" Value="Bottom"/>
+                        </Style>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="VerticalAlignment" Value="Top"/>
+                        </Style>
                         <DataTemplate x:Key="StrCellTemplate">
-                            <StackPanel >
-                                <TextBlock Text="{Binding ColName}"/>
-                                <ComboBox Text="{Binding StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel >
+                                    <TextBlock Text="{Binding ColName}"/>
+                                    <ComboBox Text="{Binding StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
+                                </StackPanel>
+                                <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                            </Grid>
+
                         </DataTemplate>
                         <DataTemplate x:Key="NumericCellTemplate">
-                            <StackPanel>
-                                <TextBlock Text="{Binding ColName}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ColName}"  VerticalAlignment="Center"/>
                                 <ComboBox Text="{Binding NumVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
                             </StackPanel>
+                                <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                            </Grid>
+
                         </DataTemplate>
                         <DataTemplate x:Key="DateTimeCellTemplate">
-                            <StackPanel>
-                                <TextBlock Text="{Binding ColName}"/>
-                                <xctk:DateTimePicker Value="{Binding DateVal}" Format="ShortDate" Width="100"/>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ColName}" VerticalAlignment="Center"/>
+                                    <xctk:DateTimePicker Value="{Binding DateVal}" Format="ShortDate" Width="100"/>
+                                </StackPanel>
+                                <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                            </Grid>
+
                         </DataTemplate>
                         <DataTemplate x:Key="TimeCellTemplate">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding ColName}"/>
-                                <ComboBox IsEditable="True" Text="{Binding TimeVal, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
-
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ColName}"  VerticalAlignment="Center"/>
+                                    <ComboBox IsEditable="True" Text="{Binding TimeVal, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
+                                <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.Resources>
                 </ListBox>
@@ -73,17 +117,18 @@
                         </Button>
                     <Button Name="btnPrev" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
                             <Image Source="img/arrow_left.png" />
-                        </Button>
+                    </Button>
                     <TextBox Text="{Binding Source={x:Static local:Current.CurRegion}, Path=CurRowNumInRng}" Width="65"/>
                     <Button Name="btnNext" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
                             <Image Source="img/arrow_right.png" />
-                        </Button>
+                    </Button>
                     <Button Name="btnLast" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
                             <Image Source="img/double_arrow_right.png"/>
-                        </Button>
+                    </Button>
                     <Button Name="btnNewRow" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
                             <Image Source="img/asterisk.png" Margin="1" />
-                        </Button>
+                    </Button>
+
                 </StackPanel>
             </StackPanel>
 
@@ -93,6 +138,12 @@
             </TabItem>
         <TabItem Header="Калькулятор">
             <local:CtrlCalk/>
+        </TabItem>
+        <TabItem Header="Настройки">
+            <StackPanel Orientation="Horizontal" Height="50">
+                <TextBlock Text="Строк автоподстановки" ToolTip="Количество строк, используемых для формирования списка автоподстановки для поля"/>
+                <xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}" />
+            </StackPanel>
         </TabItem>
     </TabControl>
         
