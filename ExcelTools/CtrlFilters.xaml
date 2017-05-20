@@ -30,7 +30,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="содержит"/>
+                                <TextBlock Text=" содержит"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <CheckBox IsChecked="{Binding Enabled}"/>
@@ -46,7 +46,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="Между"/>
+                                <TextBlock Text=" между"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <CheckBox IsChecked="{Binding Enabled}"/>
@@ -67,15 +67,41 @@
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="Между"/>
+                                <TextBlock Text=" между"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <CheckBox IsChecked="{Binding Enabled}"/>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                <xctk:DateTimePicker Value="{Binding From}"  Format="ShortDate" Width="100"/>
+                                <xctk:DateTimePicker Value="{Binding From}"  Format="ShortDate" Width="100" VerticalAlignment="Top"/>
                                 <TextBlock Text=" и "/>
-                                <xctk:DateTimePicker Value="{Binding To}"  Format="ShortDate" Width="100"/>
+                                <xctk:DateTimePicker Value="{Binding To}"  Format="ShortDate" Width="100"  VerticalAlignment="Top"/>
+                                <Expander Header="Выбрать диапазон">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <ListBox>
+                                            <ListBoxItem Content="Сегодня"/>
+                                            <ListBoxItem Content="Вчера"/>
+                                            <ListBoxItem Content="Текущая неделя"/>
+                                            <ListBoxItem Content="Прошлая неделя"/>
+                                            <ListBoxItem Content="2 недели"/>
+                                            <ListBoxItem Content="3 недели"/>
+                                            
+                                        </ListBox>
+                                        <ListBox Grid.Column="1">
+                                            <ListBoxItem Content="Сегодня"/>
+                                            <ListBoxItem Content="Вчера"/>
+                                            <ListBoxItem Content="Текущая неделя"/>
+                                            <ListBoxItem Content="Прошлая неделя"/>
+                                            <ListBoxItem Content="2 недели"/>
+                                            <ListBoxItem Content="3 недели"/>                                        
+                                        </ListBox>
+                                    </Grid>
+
+                                </Expander>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -87,7 +113,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="Между"/>
+                                <TextBlock Text=" между"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <CheckBox IsChecked="{Binding Enabled}"/>
@@ -120,7 +146,7 @@
             <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="17,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
             <TextBox Name="txtText" Margin="-1,0,1.117,0"/>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Между" />
+                <TextBlock Text=" между" />
                 <TextBox Text="{Binding From}" Width="100"/>
                 <TextBlock Text=" и "/>
                 <TextBox Text="{Binding To}" Width="100"/>
