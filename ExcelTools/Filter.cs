@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using ExcelTools.Annotations;
 using Microsoft.Office.Interop.Excel;
+using System.Windows;
 
 namespace ExcelTools
 {
@@ -48,8 +49,16 @@ namespace ExcelTools
         {
             if (Enabled)
             {
-                if (Criteria2 == null) FilterRng.AutoFilter(ColNum, Criteria1);   
-                else FilterRng.AutoFilter(ColNum, Criteria1, XlAutoFilterOperator.xlAnd, Criteria2);
+                try
+                {
+                    if (Criteria2 == null) FilterRng.AutoFilter(ColNum, Criteria1);   
+                    else FilterRng.AutoFilter(ColNum, Criteria1, XlAutoFilterOperator.xlAnd, Criteria2);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Не удалось установить фильтр!");
+                }
+
             }
         }
         public void RemoveFilter()

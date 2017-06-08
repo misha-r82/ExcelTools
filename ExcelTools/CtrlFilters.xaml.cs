@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Office.Interop.Excel;
+using System.Threading;
 
 namespace ExcelTools
 {
@@ -33,10 +34,18 @@ namespace ExcelTools
         {
             var flt = FilterFactory.CreateFilter();
             if (flt != null) Filters.Add(flt);
-            txtText.Text += ((Range)ThisWorkbook.app.Selection).Value.GetType().ToString() + "\n";
+            //txtText.Text += ((Range)ThisWorkbook.app.Selection).Value.GetType().ToString() + "\n";
             //Filters.Add(flt);
             //
 
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0) return;
+            var item = (ListBoxItem)e.AddedItems[0];
+            Thread.Sleep(500);
+            item.IsSelected = false;
         }
     }
 }

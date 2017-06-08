@@ -11,8 +11,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
         <UserControl.Resources>
             <ResourceDictionary Source="StylesDic.xaml"/>
-            
-        </UserControl.Resources>
+
+    </UserControl.Resources>
         <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Строки" Name="tabRows">
                 <StackPanel>

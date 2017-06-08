@@ -18,7 +18,19 @@
 
     </UserControl.Resources>
     <Grid>
-
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="0" Background="White" BorderBrush="#ccc" BorderThickness="1" >
+                                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
         <StackPanel>
             <ListBox Name="lstFilters" ItemsSource="{Binding Filters}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
                 <ListBox.Resources>
@@ -77,28 +89,50 @@
                                 <TextBlock Text=" и "/>
                                 <xctk:DateTimePicker Value="{Binding To}"  Format="ShortDate" Width="100"  VerticalAlignment="Top"/>
                                 <Expander Header="Выбрать диапазон">
-                                    <Grid>
+                                    <Grid Margin="-150,5,5,5">
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type ListViewItem}">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </Grid.Resources>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <ListBox>
-                                            <ListBoxItem Content="Сегодня"/>
-                                            <ListBoxItem Content="Вчера"/>
-                                            <ListBoxItem Content="Текущая неделя"/>
-                                            <ListBoxItem Content="Прошлая неделя"/>
-                                            <ListBoxItem Content="2 недели"/>
-                                            <ListBoxItem Content="3 недели"/>
-                                            
-                                        </ListBox>
-                                        <ListBox Grid.Column="1">
-                                            <ListBoxItem Content="Сегодня"/>
-                                            <ListBoxItem Content="Вчера"/>
-                                            <ListBoxItem Content="Текущая неделя"/>
-                                            <ListBoxItem Content="Прошлая неделя"/>
-                                            <ListBoxItem Content="2 недели"/>
-                                            <ListBoxItem Content="3 недели"/>                                        
-                                        </ListBox>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <Button Name="btnToday" Content="Сегодня"/>
+                                                <Button Name="btnCurWeek" Content="Текущая неделя"/>
+                                                <Button Name="btnCurMonth" Content="Текущий месяц"/>
+                                                <Button Name="btnCurQuart" Content="Текущий квартал"/>
+                                                <Button Name="btnCurHalfYear" Content="Текущее полугодие"/>
+                                                <Button Name="btnCurYear" Content="Текущий год"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                            <Button Name="btnYestarday" Content="Вчера"/>
+                                            <Button Name="btnLastWeek" Content="Прошлая неделя"/>
+                                            <Button Name="btnLastMonth" Content="Прошлый месяц"/>
+                                            <Button Name="btnLastQuart" Content="Прошлый квартал"/>
+                                            <Button Name="btnLastHalfYear" Content="Прошлое полугодие"/>
+                                            <Button Name="btnLastYear" Content="Прошлый год"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2">
+                                                <Button Name="btn7days" Content="7 дней"/>
+                                                <Button Name="btn14days" Content="14 дней"/>
+                                                <Button Name="btn30days" Content="30 дней"/>
+                                                <Button Name="btn60days" Content="60 дней"/>
+                                                <Button Name="btn90days" Content="90 дней"/>
+                                                <Button Name="btn180days" Content="180 дней"/>
+                                                <Button Name="btn360days" Content="360 дней"/>
+                                            </StackPanel>
+                                        </Grid>
+
+
                                     </Grid>
 
                                 </Expander>
@@ -144,13 +178,6 @@
                 </ListBox.Resources>
             </ListBox>
             <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="17,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-            <TextBox Name="txtText" Margin="-1,0,1.117,0"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text=" между" />
-                <TextBox Text="{Binding From}" Width="100"/>
-                <TextBlock Text=" и "/>
-                <TextBox Text="{Binding To}" Width="100"/>
-            </StackPanel>
         </StackPanel>
 
 
