@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExcelTools.Annotations;
 using Microsoft.Office.Interop.Excel;
+using WsManager;
 using static ExcelTools.Current;
 using Button = System.Windows.Controls.Button;
 
@@ -57,15 +58,24 @@ namespace ExcelTools
 
         private void BtnFrist_OnClick(object sender, RoutedEventArgs e)
         {
+
             var btn = sender as Button;
             var curReg = Current.CurRegion;
             switch (btn.Name)
             {
-                case "btnFrist": curReg.CurRowNumInRng = 1; break;
-                case "btnLast": curReg.CurRowNumInRng = curReg.CurRng.Rows.Count; break;
-                case "btnNext": if (curReg.CurRowNumInRng < curReg.CurRng.Rows.Count -1) curReg.CurRowNumInRng++ ; break;
-                case "btnPrev": if(curReg.CurRowNumInRng > 1) curReg.CurRowNumInRng--; break;
-                case "btnNewRow": 
+                case "btnFrist":
+                    curReg.CurRowNumInRng = 1;
+                    break;
+                case "btnLast":
+                    curReg.CurRowNumInRng = curReg.CurRng.Rows.Count;
+                    break;
+                case "btnNext":
+                    if (curReg.CurRowNumInRng < curReg.CurRng.Rows.Count - 1) curReg.CurRowNumInRng++;
+                    break;
+                case "btnPrev":
+                    if (curReg.CurRowNumInRng > 1) curReg.CurRowNumInRng--;
+                    break;
+                case "btnNewRow":
                     var oldRow = curReg.ActiveRow;
                     curReg.CurRowNumInRng = curReg.CurRng.Rows.Count;
                     for (int i = 0; i < oldRow.Cells.Length; i++)

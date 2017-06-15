@@ -127,6 +127,9 @@
     <Compile Include="Filter.cs" />
     <Compile Include="FilterFactory.cs" />
     <Compile Include="FilterTemplateSelector.cs" />
+    <Compile Include="FrmTest.xaml.cs">
+      <DependentUpon>FrmTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThisWorkbook.cs">
@@ -204,7 +207,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrmTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="StylesDic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -123,8 +123,8 @@
             </Style>
         </Grid.Resources>
         <StackPanel>
-            <ListBox Name="lstFilters" ItemsSource="{Binding Filters}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
-                <ListBox.Resources>
+            <ItemsControl Name="lstFilters" ItemsSource="{Binding Filters}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
+                <ItemsControl.Resources>
                     <DataTemplate x:Key="StrFilterTemplate">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -197,29 +197,29 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <StackPanel>
-                                                <Button Name="btnToday" Content="Сегодня"/>
-                                                <Button Name="btnCurWeek" Content="Текущая неделя"/>
-                                                <Button Name="btnCurMonth" Content="Текущий месяц"/>
-                                                <Button Name="btnCurQuart" Content="Текущий квартал"/>
-                                                <Button Name="btnCurHalfYear" Content="Текущее полугодие"/>
-                                                <Button Name="btnCurYear" Content="Текущий год"/>
+                                                <Button Name="btnToday" Content="Сегодня" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnCurWeek" Content="Текущая неделя" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnCurMonth" Content="Текущий месяц"  Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnCurQuart" Content="Текущий квартал"  Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnCurHalfYear" Content="Текущее полугодие"  Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnCurYear" Content="Текущий год"  Click="BtnTimeFltReset_OnClick"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="1">
-                                            <Button Name="btnYestarday" Content="Вчера"/>
-                                            <Button Name="btnLastWeek" Content="Прошлая неделя"/>
-                                            <Button Name="btnLastMonth" Content="Прошлый месяц"/>
-                                            <Button Name="btnLastQuart" Content="Прошлый квартал"/>
-                                            <Button Name="btnLastHalfYear" Content="Прошлое полугодие"/>
-                                            <Button Name="btnLastYear" Content="Прошлый год"/>
+                                                <Button Name="btnYestarday" Content="Вчера"  Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnLastWeek" Content="Прошлая неделя"  Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnLastMonth" Content="Прошлый месяц" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnLastQuart" Content="Прошлый квартал" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnLastHalfYear" Content="Прошлое полугодие" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btnLastYear" Content="Прошлый год" Click="BtnTimeFltReset_OnClick"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="2">
-                                                <Button Name="btn7days" Content="7 дней"/>
-                                                <Button Name="btn14days" Content="14 дней"/>
-                                                <Button Name="btn30days" Content="30 дней"/>
-                                                <Button Name="btn60days" Content="60 дней"/>
-                                                <Button Name="btn90days" Content="90 дней"/>
-                                                <Button Name="btn180days" Content="180 дней"/>
-                                                <Button Name="btn360days" Content="360 дней"/>
+                                                <Button Name="btn7days" Content="7 дней" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btn14days" Content="14 дней" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btn30days" Content="30 дней" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btn60days" Content="60 дней" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btn90days" Content="90 дней" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btn180days" Content="180 дней" Click="BtnTimeFltReset_OnClick"/>
+                                                <Button Name="btn360days" Content="360 дней" Click="BtnTimeFltReset_OnClick"/>
                                             </StackPanel>
                                         </Grid>
 
@@ -266,8 +266,8 @@
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
-                </ListBox.Resources>
-            </ListBox>
+                </ItemsControl.Resources>
+            </ItemsControl>
             <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="17,20,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         </StackPanel>
 
