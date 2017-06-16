@@ -178,6 +178,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Лист21.resx">
+      <DependentUpon>Лист21.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Лист31.resx">
       <DependentUpon>Лист31.cs</DependentUpon>
     </EmbeddedResource>
