@@ -13,9 +13,9 @@ namespace ExcelTools {
     
     
     /// 
-    [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(2)]
+    [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(4)]
     [global::System.Security.Permissions.PermissionSetAttribute(global::System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
-    public sealed partial class Лист1 : Microsoft.Office.Tools.Excel.WorksheetBase {
+    public sealed partial class Лист5 : Microsoft.Office.Tools.Excel.WorksheetBase {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         private global::System.Object missing = global::System.Type.Missing;
@@ -23,8 +23,8 @@ namespace ExcelTools {
         /// 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Лист1(global::Microsoft.Office.Tools.Excel.Factory factory, global::System.IServiceProvider serviceProvider) : 
-                base(factory, serviceProvider, "Лист1", "Лист1") {
+        public Лист5(global::Microsoft.Office.Tools.Excel.Factory factory, global::System.IServiceProvider serviceProvider) : 
+                base(factory, serviceProvider, "Лист5", "Лист5") {
         }
         
         /// 
@@ -33,7 +33,7 @@ namespace ExcelTools {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         protected override void Initialize() {
             base.Initialize();
-            Globals.Лист1 = this;
+            Globals.Лист5 = this;
             global::System.Windows.Forms.Application.EnableVisualStyles();
             this.InitializeCachedData();
             this.InitializeControls();
@@ -148,15 +148,15 @@ namespace ExcelTools {
     
     internal sealed partial class Globals {
         
-        private static Лист1 _Лист1;
+        private static Лист5 _Лист5;
         
-        internal static Лист1 Лист1 {
+        internal static Лист5 Лист5 {
             get {
-                return _Лист1;
+                return _Лист5;
             }
             set {
-                if ((_Лист1 == null)) {
-                    _Лист1 = value;
+                if ((_Лист5 == null)) {
+                    _Лист5 = value;
                 }
                 else {
                     throw new System.NotSupportedException();

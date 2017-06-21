@@ -128,6 +128,9 @@ namespace ExcelTools
     }
     class DateFilter : FilterProto
     {
+        private DateTime _from;
+        private DateTime _to;
+
         public DateFilter(Cell cell) : base()
         {
             {
@@ -135,8 +138,29 @@ namespace ExcelTools
                 To = DateTime.Now;
             }
         }
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+
+        public DateTime From
+        {
+            get { return _from; }
+            set
+            {
+                if (value == _from) return;
+                _from = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime To
+        {
+            get { return _to; }
+            set
+            {
+                if (value == _to) return;
+                _to = value;
+                OnPropertyChanged();
+            }
+        }
+
         protected override object Criteria1
         {
             get { return string.Format(">={0}", From.ToString(@"MM\/dd\/yyyy")); }

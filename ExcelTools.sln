@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTools", "ExcelTools\Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WsManager", "WsManager\WsManager.csproj", "{244AEF22-F28A-4A21-A955-53EDD665D641}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{244AEF22-F28A-4A21-A955-53EDD665D641}.Release|Any CPU.Build.0 = Release|Any CPU
 		{244AEF22-F28A-4A21-A955-53EDD665D641}.Release|x64.ActiveCfg = Release|Any CPU
 		{244AEF22-F28A-4A21-A955-53EDD665D641}.Release|x64.Build.0 = Release|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Debug|x64.Build.0 = Debug|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Release|x64.ActiveCfg = Release|Any CPU
+		{E3DE0B6E-0988-4E11-96E7-B648D92B3F85}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

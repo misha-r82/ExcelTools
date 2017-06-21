@@ -74,8 +74,15 @@
     <Compile Include="CtrlWbks.xaml.cs">
       <DependentUpon>CtrlWbks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrmTest.xaml.cs">
+      <DependentUpon>FrmTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WbMan.cs" />
     <Compile Include="Ws.cs" />
+    <Page Include="FrmTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -93,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StylesDic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
