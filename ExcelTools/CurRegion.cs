@@ -83,6 +83,21 @@ namespace ExcelTools
 
         public void Reload()
         {
+            try
+            {
+                var tmp = (PivotTable)ActiveWs.PivotTables(1);
+                var fields = (PivotFields)tmp.PivotFields();
+                for (int i = 1; i <= fields.Count; i++)
+                {
+                    var field = (PivotField)fields.Item(i);
+                    Debug.WriteLine(field.Name);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            
             _selection = (Range)ThisWorkbook.app.Selection;
             _activeCell = ThisWorkbook.app.ActiveCell;
             _curRng = _activeCell.CurrentRegion;
