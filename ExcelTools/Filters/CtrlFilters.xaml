@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="StylesDic.xaml"/>
+                <ResourceDictionary Source="..\StylesDic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:FilterTemplateSelector x:Key="FilterTemplateSelector"/>
         </ResourceDictionary>
@@ -123,7 +123,7 @@
             </Style>
         </Grid.Resources>
         <StackPanel>
-            <ItemsControl Name="lstFilters" ItemsSource="{Binding Filters}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
+            <ItemsControl Name="lstFilters" ItemsSource="{Binding Source={x:Static local:FilterCollection.Filters}}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
                 <ItemsControl.Resources>
                     <DataTemplate x:Key="StrFilterTemplate">
                         <Grid>

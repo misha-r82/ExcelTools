@@ -27,18 +27,11 @@ namespace ExcelTools
         public CtrlFilters()
         {
             InitializeComponent();
-            Filters = new ObservableCollection<FilterProto>();
             DataContext = this;
         }
-        public ObservableCollection<FilterProto> Filters { get; }
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            var flt = FilterFactory.CreateFilter();
-            if (flt != null) Filters.Add(flt);
-            //txtText.Text += ((Range)ThisWorkbook.app.Selection).Value.GetType().ToString() + "\n";
-            //Filters.Add(flt);
-            //
-
+            FilterCollection.AddFilter(Current.CurRegion.ActiveCell);           
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

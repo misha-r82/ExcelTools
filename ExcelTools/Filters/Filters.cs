@@ -6,17 +6,20 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Office.Interop.Excel;
+using System.Collections.ObjectModel;
 
 namespace ExcelTools
 {
-    static class FilterFactory
+    public static class FilterCollection
     {
- 
-        public static FilterProto CreateFilter()
+        static FilterCollection()
         {
-            Range rng = Current.CurRegion.ActiveCell;
-            var activeCell = new Cell(rng, true);
-            
+            Filters = new ObservableCollection<FilterProto>();
+        }
+        public static ObservableCollection<FilterProto> Filters { get; }
+
+        private static FilterProto CreateFilter(Cell activeCell)
+        {           
             switch (activeCell.Type)
             {
                 case CellTypes.str: return new StrFilter(activeCell);
@@ -24,12 +27,14 @@ namespace ExcelTools
                 case CellTypes.date: return new DateFilter(activeCell);
                 case CellTypes.time: return new TimeFilter(activeCell);
                 default: return new StrFilter(activeCell);
-
             }
-            //
-            //if (rng.v)
-
-
+        }
+        public static void AddFilter(Range activeCell)
+        {
+            var cell = new Cell(activeCell, true);
+            var flt = CreateFilter(cell);
+            if (flt != null) Filters.Add(flt);
         }
     }
+
 }

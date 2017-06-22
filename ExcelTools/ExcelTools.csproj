@@ -136,19 +136,23 @@
       <DependentUpon>ActionsPaneControl1.cs</DependentUpon>
     </Compile>
     <Compile Include="ActiveRow.cs" />
+    <Compile Include="Calck\Calculator.cs" />
+    <Compile Include="Calck\CalculatorCommands.cs" />
+    <Compile Include="Calck\CalculatorMemoryToVisibilityConverter.cs" />
+    <Compile Include="Calck\CalculatorUtilities.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="ColRng.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="CtrlCalk.xaml.cs">
       <DependentUpon>CtrlCalk.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CtrlFilters.xaml.cs">
+    <Compile Include="Filters\CtrlFilters.xaml.cs">
       <DependentUpon>CtrlFilters.xaml</DependentUpon>
     </Compile>
     <Compile Include="CurRegion.cs" />
     <Compile Include="ExTools.cs" />
-    <Compile Include="Filter.cs" />
-    <Compile Include="FilterFactory.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\Filters.cs" />
     <Compile Include="FilterTemplateSelector.cs" />
     <Compile Include="FrmTest.xaml.cs">
       <DependentUpon>FrmTest.xaml</DependentUpon>
@@ -239,11 +243,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Calck\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CtrlCalk.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CtrlFilters.xaml">
+    <Page Include="Filters\CtrlFilters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
