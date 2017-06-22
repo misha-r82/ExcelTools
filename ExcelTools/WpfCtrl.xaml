@@ -10,11 +10,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
         <UserControl.Resources>
-            <ResourceDictionary Source="StylesDic.xaml"/>
-
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StylesDic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BoolToVisConverter x:Key="BoolToVisConverter"/>
+            </ResourceDictionary>
+            
+            
     </UserControl.Resources>
         <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="Строки" Name="tabRows">
+        <TabItem Header="Строки" Name="tabRows" Visibility="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell, Converter={StaticResource BoolToVisConverter}}">
                 <StackPanel>
                     <StackPanel.Resources>
                         <local:ActiveRowTemplateSelector x:Key="ActiveRowTemplateSelector"/>

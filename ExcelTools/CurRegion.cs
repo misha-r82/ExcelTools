@@ -34,11 +34,24 @@ namespace ExcelTools
         private Range _curRng;
         private ActiveRow _activeRow;
         private int _wnd;
+        private bool _isWorkSheet;
+        private bool _isTableCell;
 
 
         public Worksheet ActiveWs { get { return (Worksheet)ThisWorkbook.app.ActiveSheet; } }
         public Range Selection { get { return _selection; } }
         public Range ActiveCell { get { return _activeCell; } }
+
+        public bool IsWorkSheet
+        {
+            get { return _isWorkSheet; }
+            private set
+            {
+                if (_isWorkSheet == value) return;
+                _isWorkSheet = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ActiveRow ActiveRow
         {
@@ -58,6 +71,16 @@ namespace ExcelTools
             {
                 if (value == _wnd) return;
                 _wnd = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsTableCell
+        {
+            get { return _isTableCell; }
+            set
+            {
+                if (value == _isTableCell) return;
+                _isTableCell = value;
                 OnPropertyChanged();
             }
         }
@@ -83,20 +106,21 @@ namespace ExcelTools
 
         public void Reload()
         {
-            try
+            /*try
             {
                 var tmp = (PivotTable)ActiveWs.PivotTables(1);
                 var fields = (PivotFields)tmp.PivotFields();
                 for (int i = 1; i <= fields.Count; i++)
                 {
                     var field = (PivotField)fields.Item(i);
-                    Debug.WriteLine(field.Name);
+                    XlPivotFieldDataType type = field.DataType;
+                    Debug.WriteLine(field.Name + "-"+type);
                 }
             }
             catch (Exception e)
             {
 
-            }
+            }*/
             
             _selection = (Range)ThisWorkbook.app.Selection;
             _activeCell = ThisWorkbook.app.ActiveCell;
@@ -112,6 +136,10 @@ namespace ExcelTools
         }
         private void ApplicationOnSheetSelectionChange(object sh, Range target)
         {
+            var sheet =  sh as Worksheet;
+            IsWorkSheet = sheet.Type == XlSheetType.xlWorksheet;
+            IsTableCell = ((PivotTables)sheet.PivotTables()).Count == 0;
+            if (!IsWorkSheet) return;
             Reload();
         }
 
