@@ -143,7 +143,7 @@
     <Compile Include="Cell.cs" />
     <Compile Include="ColRng.cs" />
     <Compile Include="Converters.cs" />
-    <Compile Include="CtrlCalk.xaml.cs">
+    <Compile Include="Calck\CtrlCalk.xaml.cs">
       <DependentUpon>CtrlCalk.xaml</DependentUpon>
     </Compile>
     <Compile Include="Filters\CtrlFilters.xaml.cs">
@@ -224,9 +224,7 @@
       <DependentUpon>Лист31.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ExcelTools.xltx" />
-    <None Include="ExcelTools_1_TemporaryKey.pfx" />
     <None Include="ExcelTools_TemporaryKey.pfx" />
-    <None Include="key.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -247,7 +245,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CtrlCalk.xaml">
+    <Page Include="Calck\CtrlCalk.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -318,7 +316,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ExcelTools_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ExcelTools_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -340,17 +338,18 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>9D3929DD2D913135D06A76F4BEB2D0DA3C28B8A5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1BDD09D734A161DCC017B15D5581D9E2E014CEF0</ManifestCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="ExcelTools.xltx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\Office16\Excel.exe" DebugInfoCommandLine="/t /x &quot;[$OUTPUT]ExcelTools.xltx&quot;" />
+        <ProjectProperties HostName="ExcelTools.xltx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files\Microsoft Office\Office16\Excel.exe" DebugInfoCommandLine="/t /x &quot;[$OUTPUT]ExcelTools.xltx&quot;" />
         <Host Name="Excel Document" Path=".\ExcelTools.xltx" GeneratedCodeNamespace="ExcelTools">
           <HostItem Name="ThisWorkbook" Code="ThisWorkbook.cs" CanonicalName="ThisWorkbook" Blueprint="ThisWorkbook.Designer.xml" GeneratedCode="ThisWorkbook.Designer.cs" />
           <HostItem Name="Лист2" Code="Лист21.cs" CanonicalName="Лист2" DisplayName="касса" Blueprint="Лист21.Designer.xml" GeneratedCode="Лист21.Designer.cs" />
