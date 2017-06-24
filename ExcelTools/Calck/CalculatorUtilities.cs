@@ -110,7 +110,7 @@ namespace Calck.Utilities
                     content = "+";
                     break;
                 case Calculator.CalculatorButtonType.Back:
-                    content = "Back";
+                    content = "\u2192";
                     break;
                 case Calculator.CalculatorButtonType.Cancel:
                     content = "CE";
@@ -178,7 +178,7 @@ namespace Calck.Utilities
                     content = "6";
                     break;
                 case Calculator.CalculatorButtonType.Sqrt:
-                    content = "Sqrt";
+                    content = "\u221a";
                     break;
                 case Calculator.CalculatorButtonType.Subtract:
                     content = "-";

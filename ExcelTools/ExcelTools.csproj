@@ -159,6 +159,7 @@
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabMan.cs" />
     <Compile Include="ThisWorkbook.cs">
       <DependentUpon>ExcelTools.xltx</DependentUpon>
     </Compile>
@@ -342,14 +343,14 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1BDD09D734A161DCC017B15D5581D9E2E014CEF0</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>5FA0B1C84B8E333941C5501A6CD4950FACD675F6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="ExcelTools.xltx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files\Microsoft Office\Office16\Excel.exe" DebugInfoCommandLine="/t /x &quot;[$OUTPUT]ExcelTools.xltx&quot;" />
+        <ProjectProperties HostName="ExcelTools.xltx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\Office16\Excel.exe" DebugInfoCommandLine="/t /x &quot;[$OUTPUT]ExcelTools.xltx&quot;" />
         <Host Name="Excel Document" Path=".\ExcelTools.xltx" GeneratedCodeNamespace="ExcelTools">
           <HostItem Name="ThisWorkbook" Code="ThisWorkbook.cs" CanonicalName="ThisWorkbook" Blueprint="ThisWorkbook.Designer.xml" GeneratedCode="ThisWorkbook.Designer.cs" />
           <HostItem Name="Лист2" Code="Лист21.cs" CanonicalName="Лист2" DisplayName="касса" Blueprint="Лист21.Designer.xml" GeneratedCode="Лист21.Designer.cs" />

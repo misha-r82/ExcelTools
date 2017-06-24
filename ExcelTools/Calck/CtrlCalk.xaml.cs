@@ -25,16 +25,19 @@ namespace ExcelTools
         public CtrlCalk()
         {
             InitializeComponent();
+            Current.CurRegion.PropertyChanged += (o, eventArgs) => SetCalckValue();
+        }
 
-            Current.CurRegion.PropertyChanged += (sender, args) =>
-            {
-                object val = Current.CurRegion.ActiveCell.Value;
-                if (val is double || val is long)
-                {
-                    ctrlCalk.DisplayText = Current.CurRegion.ActiveCell.Value2.ToString();
-                }
-            };
+        private void SetCalckValue()
+        {
+            if (TabMan.CurTab.Name != "tabCalk") return;
+            object val = Current.CurRegion.ActiveCell.Value;
+            if (val is double || val is long)
+                ctrlCalk.SetDisplayText(Current.CurRegion.ActiveCell.Value2.ToString());
         }
 
     }
+
 }
+
+

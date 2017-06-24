@@ -30,6 +30,12 @@ namespace Calck
   {
     private const string PART_CalculatorButtonPanel = "PART_CalculatorButtonPanel";
 
+      public void SetDisplayText(string val)
+      {
+          DisplayText = val;
+          _showNewNumber = false;
+      }
+
     #region Members
 
     private ContentControl _buttonPanel;

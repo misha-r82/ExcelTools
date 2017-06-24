@@ -19,7 +19,7 @@
             
             
     </UserControl.Resources>
-        <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl TabStripPlacement="Left" Name="mainTab" >
         <TabItem Header="Строки" Name="tabRows" Visibility="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell, Converter={StaticResource BoolToVisConverter}}">
                 <StackPanel>
                     <StackPanel.Resources>
@@ -142,7 +142,7 @@
             <TabItem Header="Фильтры">
                  <local:CtrlFilters/>
             </TabItem>
-        <TabItem Header="Калькулятор">
+        <TabItem Header="Калькулятор" Name="tabCalk">
             <local:CtrlCalk/>
         </TabItem>
         <TabItem Header="Настройки">

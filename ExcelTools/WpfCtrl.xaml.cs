@@ -35,16 +35,12 @@ namespace ExcelTools
         {
             InitializeComponent();
             DataContext = this;
+            TabMan.SetTabCtrl(mainTab);
             Current.CurRegion.PropertyChanged += (sender, args) =>
             { if (args.PropertyName == "CurRegion.Selection") lstActiveRow.Items.Refresh();};
         }
 
 
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
 
 
