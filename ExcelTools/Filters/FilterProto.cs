@@ -10,7 +10,7 @@ namespace ExcelTools
     public abstract class FilterProto : INotifyPropertyChanged
     {
         private int ColNum { get; }
-        public string Name { get; }
+        public virtual string Name { get; }
         public object[] ValueList { get; set; }
         private Range FilterRng { get; set; }
         protected virtual object Criteria1 { get; }

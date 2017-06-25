@@ -11,6 +11,7 @@ namespace ExcelTools
     class StrFilter : FilterProto
     {
         private string _patt;
+        public override string Name { get { return base.Name + " содержит"; } }
 
         public string Patt
         {
@@ -39,7 +40,7 @@ namespace ExcelTools
     {
         public double From { get; set; }
         public double To { get; set; }
-
+        public override string Name { get { return base.Name + " между"; } }
         protected override object Criteria1
         {
             get { return string.Format(">={0}", From); }
@@ -63,7 +64,7 @@ namespace ExcelTools
     {
         private DateTime _from;
         private DateTime _to;
-
+        public override string Name { get { return base.Name + " между"; } }
         public DateFilter(Cell cell) : base()
         {
             {
@@ -109,6 +110,7 @@ namespace ExcelTools
     {
         public TimeSpan From { get; set; }
         public TimeSpan To { get; set; }
+        public override string Name { get { return base.Name + " между"; } }
         public TimeSpan[] ValList { get; private set; }
         protected override object Criteria1
         {

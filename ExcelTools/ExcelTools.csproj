@@ -154,7 +154,7 @@
     <Compile Include="Filters\FilterCollection.cs" />
     <Compile Include="Filters\FilterProto.cs" />
     <Compile Include="Filters\Filters.cs" />
-    <Compile Include="FilterTemplateSelector.cs" />
+    <Compile Include="Filters\FilterTemplateSelector.cs" />
     <Compile Include="Filters\FltTemplates.xaml.cs">
       <DependentUpon>FltTemplates.xaml</DependentUpon>
     </Compile>

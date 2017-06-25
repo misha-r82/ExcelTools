@@ -13,28 +13,18 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="../Theme/Theme.xaml"/>                   
+                    <ResourceDictionary Source="../Theme/Theme.xaml"/>
+                    <ResourceDictionary Source="FltTemplates.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
-                <local:FilterTemplateSelector x:Key="FilterTemplateSelector"/>
             </ResourceDictionary>
-
         </Grid.Resources>
         <StackPanel>
-
-            <ItemsControl Name="lstFilters" ItemsSource="{Binding Source={x:Static local:FilterCollection.Filters}}" ItemTemplateSelector="{StaticResource FilterTemplateSelector}">
-                <ItemsControl.Resources>
-                    <ResourceDictionary>
-                        <ResourceDictionary.MergedDictionaries>
-                            <ResourceDictionary Source="FltTemplates.xaml"/>
-                        </ResourceDictionary.MergedDictionaries>
-                   </ResourceDictionary>
-                </ItemsControl.Resources>
-            </ItemsControl>
+            <ItemsControl Name="lstFilters" ItemsSource="{Binding Source={x:Static local:FilterCollection.Filters}}" 
+                          ItemTemplate="{StaticResource BaseFilterTemplate}"/>
             <Button x:Name="button" Margin="10" VerticalAlignment="Top" Width="45" Height="45" Click="button_Click">
                 <Button.Content>
                     <TextBlock Text="+"  FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
                 </Button.Content>
-
             </Button>
         </StackPanel>
 
