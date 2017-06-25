@@ -12,7 +12,9 @@
         <UserControl.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="StylesDic.xaml"/>
+                <ResourceDictionary Source="Theme/Theme.xaml"/>
+                <ResourceDictionary Source="Theme/StylesDic.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
             <conv:BoolToVisConverter x:Key="BoolToVisConverter"/>
             </ResourceDictionary>

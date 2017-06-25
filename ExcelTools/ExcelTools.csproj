@@ -151,11 +151,12 @@
     </Compile>
     <Compile Include="CurRegion.cs" />
     <Compile Include="ExTools.cs" />
-    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\FilterCollection.cs" />
+    <Compile Include="Filters\FilterProto.cs" />
     <Compile Include="Filters\Filters.cs" />
     <Compile Include="FilterTemplateSelector.cs" />
-    <Compile Include="FrmTest.xaml.cs">
-      <DependentUpon>FrmTest.xaml</DependentUpon>
+    <Compile Include="Filters\FltTemplates.xaml.cs">
+      <DependentUpon>FltTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -254,15 +255,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FrmTest.xaml">
+    <Page Include="Filters\FltTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="StylesDic.xaml">
+    <Page Include="Theme\StylesDic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Theme.xaml">
+    <Page Include="Theme\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,0 +1,148 @@
+﻿<ResourceDictionary x:Class="ExcelTools.FltTemplates"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:excelTools="clr-namespace:ExcelTools"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:converters="clr-namespace:ExcelTools.Converters">
+    <DataTemplate x:Key="StrFilterTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}"/>
+                <TextBlock Text=" содержит"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <CheckBox IsChecked="{Binding Enabled}"/>
+            </StackPanel>
+            <TextBox Grid.Row="1" Text="{Binding Patt, UpdateSourceTrigger=PropertyChanged, Delay=800}" HorizontalAlignment="Stretch"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="NumericFilterTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}"/>
+                <TextBlock Text=" между"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <CheckBox IsChecked="{Binding Enabled}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <TextBox Text="{Binding From}" Width="110"/>
+                <TextBlock Text=" и "/>
+                <TextBox Text="{Binding To}" Width="110"/>
+            </StackPanel>
+        </Grid>
+
+    </DataTemplate>
+    <DataTemplate x:Key="DateFilterTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}"/>
+                <TextBlock Text=" между"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <CheckBox IsChecked="{Binding Enabled}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <xctk:DateTimePicker Value="{Binding From}"  Format="ShortDate" Width="100" VerticalAlignment="Top"/>
+                <TextBlock Text=" и "/>
+                <xctk:DateTimePicker Value="{Binding To}"  Format="ShortDate" Width="100"  VerticalAlignment="Top"/>
+                <Expander Header="Выбрать диапазон">
+                    <Grid Margin="-215,5,5,5">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Button Name="btnToday" Content="Сегодня" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnCurWeek" Content="Текущая неделя" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnCurMonth" Content="Текущий месяц"  Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnCurQuart" Content="Текущий квартал"  Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnCurHalfYear" Content="Текущее полугодие"  Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnCurYear" Content="Текущий год"  Click="BtnTimeFltReset_OnClick"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <Button Name="btnYestarday" Content="Вчера"  Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnLastWeek" Content="Прошлая неделя"  Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnLastMonth" Content="Прошлый месяц" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnLastQuart" Content="Прошлый квартал" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnLastHalfYear" Content="Прошлое полугодие" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btnLastYear" Content="Прошлый год" Click="BtnTimeFltReset_OnClick"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <Button Name="btn7days" Content="7 дней" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btn14days" Content="14 дней" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btn30days" Content="30 дней" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btn60days" Content="60 дней" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btn90days" Content="90 дней" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btn180days" Content="180 дней" Click="BtnTimeFltReset_OnClick"/>
+                                <Button Name="btn360days" Content="360 дней" Click="BtnTimeFltReset_OnClick"/>
+                            </StackPanel>
+                        </Grid>
+
+
+                    </Grid>
+
+                </Expander>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="TimeFilterTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}"/>
+                <TextBlock Text=" между"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <CheckBox IsChecked="{Binding Enabled}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <converters:TimeToDateConverter x:Key="TimeConverter"/>
+                </StackPanel.Resources>
+                <ComboBox IsEditable="True" Text="{Binding From, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox IsEditable="True" Text="{Binding To, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

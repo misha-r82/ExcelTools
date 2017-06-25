@@ -19,7 +19,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ExcelTools.Annotations;
 using Microsoft.Office.Interop.Excel;
-using WsManager;
 using static ExcelTools.Current;
 using Button = System.Windows.Controls.Button;
 
