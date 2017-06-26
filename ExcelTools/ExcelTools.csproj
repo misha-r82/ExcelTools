@@ -310,6 +310,12 @@
       <DependentUpon>Лист7.cs</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\delete.png" />
+    <Content Include="img\list.png" />
+    <Content Include="img\plus.png" />
+    <Content Include="img\text_box.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

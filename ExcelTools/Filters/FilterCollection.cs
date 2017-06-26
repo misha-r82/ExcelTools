@@ -29,11 +29,18 @@ namespace ExcelTools
                 default: return new StrFilter(activeCell);
             }
         }
+
+        public static void Remove(FilterProto filter)
+        {
+            filter.RemoveFilter();
+            Filters.Remove(filter);
+        }
+        
         public static void AddFilter(Range activeCell)
         {
             var cell = new Cell(activeCell, true);
             var flt = CreateFilter(cell);
-            if (flt != null) Filters.Add(flt);
+            if (flt != null && !Filters.Contains(flt)) Filters.Add(flt);
         }
     }
 

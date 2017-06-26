@@ -110,5 +110,13 @@ namespace ExcelTools
             }
 
         }
+
+        private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            if (element == null) return;
+            var filter = element.DataContext as FilterProto;
+            FilterCollection.Remove(filter);
+        }
     }
 }

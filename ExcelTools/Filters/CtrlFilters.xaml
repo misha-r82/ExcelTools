@@ -23,7 +23,7 @@
                           ItemTemplate="{StaticResource BaseFilterTemplate}"/>
             <Button x:Name="button" Margin="10" VerticalAlignment="Top" Width="45" Height="45" Click="button_Click">
                 <Button.Content>
-                    <TextBlock Text="+"  FontSize="20" FontWeight="Bold" TextAlignment="Center"/>
+                    <Image Source="../img/plus.png"/>
                 </Button.Content>
             </Button>
         </StackPanel>
