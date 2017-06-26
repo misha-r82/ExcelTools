@@ -46,7 +46,22 @@ namespace ExcelTools.Converters
 
         }
     }
+    public class InvBoolToVisConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            bool val = value != null && (bool)value;
+            return val ?  Visibility.Collapsed : Visibility.Visible;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+
+        }
+    }
     public class TestConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,

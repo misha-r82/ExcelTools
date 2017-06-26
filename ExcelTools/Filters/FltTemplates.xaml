@@ -151,9 +151,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <ListView ItemsSource="{Binding ValueList}">
-                
-            </ListView>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <ToggleButton IsChecked="{Binding IsListFilter}"/>
                 <CheckBox IsChecked="{Binding Enabled}"/>

@@ -19,8 +19,15 @@
             </ResourceDictionary>
         </Grid.Resources>
         <StackPanel>
-            <ItemsControl Name="lstFilters" ItemsSource="{Binding Source={x:Static local:FilterCollection.Filters}}" 
-                          ItemTemplate="{StaticResource BaseFilterTemplate}"/>
+            <ItemsControl Name="lstFilters" 
+                          ItemsSource="{Binding Source={x:Static local:FilterCollection.Filters}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:CtrlFilterBase/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
             <Button x:Name="button" Margin="10" VerticalAlignment="Top" Width="45" Height="45" Click="button_Click">
                 <Button.Content>
                     <Image Source="../img/plus.png"/>

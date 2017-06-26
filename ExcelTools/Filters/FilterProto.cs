@@ -16,6 +16,19 @@ namespace ExcelTools
         protected virtual object Criteria1 { get; }
         protected virtual object Criteria2 { get; }
         private bool _enabled;
+        private bool _isListMode;
+
+        public bool IsListMode
+        {
+            get { return _isListMode; }
+            set
+            {
+                if (value == _isListMode) return;
+                _isListMode = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool Enabled
         {
             get { return _enabled; }
