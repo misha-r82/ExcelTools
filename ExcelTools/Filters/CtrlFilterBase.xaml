@@ -61,7 +61,8 @@
         </Grid>
         <ContentControl Grid.Row="1" Content="{Binding}" ContentTemplateSelector="{StaticResource FilterTemplateSelector}"
                         Visibility="{Binding IsListMode, Converter={StaticResource InvBoolToVisConverter}}"/>
-        <ListView Grid.Row="2" ItemsSource="{Binding ValueList}" Visibility="{Binding IsListMode, Converter={StaticResource BoolToVisConverter}}">
+        <ListView Name="lstItems" Grid.Row="2" ItemsSource="{Binding ValueList}" SelectionChanged="Selector_OnSelectionChanged"
+                  Visibility="{Binding IsListMode, Converter={StaticResource BoolToVisConverter}}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <CheckBox IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, 

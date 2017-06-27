@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -20,7 +21,7 @@ namespace ExcelTools
         private bool _isSelected;
 
         public CellTypes Type { get; }
-        public object[] ValList { get; private set; }
+        public Cell[] ValList { get; private set; }
         public Range Rng { get { return _rng; } }
         public string ColName
         {
@@ -159,7 +160,6 @@ namespace ExcelTools
                 tmp.Add(new Cell((Range) r, false));
             ValList = tmp
                 .Where(c=>c.Type == Type && !string.IsNullOrEmpty(c.ToString()))
-                .Select(c => c.Value)
                 .Distinct().ToArray();
         }
 
@@ -198,6 +198,19 @@ namespace ExcelTools
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class CellValEquilityComparer : IEqualityComparer<Cell>
+    {
+        public bool Equals(Cell x, Cell y)
+        {
+            return x.Value.ToString() == y.Value.ToString();
+        }
+
+        public int GetHashCode(Cell obj)
+        {
+            return obj.Value.ToString().GetHashCode();
         }
     }
 }

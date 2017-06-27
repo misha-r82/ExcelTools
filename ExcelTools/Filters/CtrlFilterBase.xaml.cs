@@ -34,9 +34,13 @@ namespace ExcelTools
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var items = ((ListBox)sender).SelectedItems;
+            var items = lstItems.SelectedItems;
+            var filter = DataContext as FilterProto;
+            if (filter == null) return;
+            filter.SelectedValues = items.OfType<object>().ToArray();
             //var fiter = (object)
 
         }
+
     }
 }

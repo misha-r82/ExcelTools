@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using ExcelTools.Annotations;
@@ -12,6 +14,18 @@ namespace ExcelTools
         private int ColNum { get; }
         public virtual string Name { get; }
         public object[] ValueList { get; set; }
+        private object[] _selectedValues;
+
+        public object[] SelectedValues
+        {
+            get { return _selectedValues; }
+            set
+            {
+                _selectedValues = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Range FilterRng { get; set; }
         protected virtual object Criteria1 { get; }
         protected virtual object Criteria2 { get; }
@@ -54,8 +68,17 @@ namespace ExcelTools
         {
             if (Enabled)
             {
+                RemoveFilter();
                 try
                 {
+                    if (IsListMode)
+                    {
+                        if (SelectedValues.Length == 0) return;
+                        var strArr = SelectedValues.Select(v => v.ToString()).ToArray();
+                        FilterRng.CurrentRegion.AutoFilter(ColNum, strArr, XlAutoFilterOperator.xlFilterValues,
+                            Type.Missing, true);
+                        return;
+                    }
                     if (Criteria2 == null) FilterRng.AutoFilter(ColNum, Criteria1);   
                     else FilterRng.AutoFilter(ColNum, Criteria1, XlAutoFilterOperator.xlAnd, Criteria2);
                 }
@@ -68,7 +91,14 @@ namespace ExcelTools
         }
         public void RemoveFilter()
         {
-            FilterRng.AutoFilter(ColNum);
+            try
+            {
+                FilterRng.AutoFilter(ColNum);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Не удалось снять фильтр!");
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
