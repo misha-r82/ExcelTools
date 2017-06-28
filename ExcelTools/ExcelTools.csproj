@@ -141,6 +141,7 @@
     <Compile Include="Calck\CalculatorMemoryToVisibilityConverter.cs" />
     <Compile Include="Calck\CalculatorUtilities.cs" />
     <Compile Include="Cell.cs" />
+    <Compile Include="CellValue.cs" />
     <Compile Include="ColRng.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="Calck\CtrlCalk.xaml.cs">
