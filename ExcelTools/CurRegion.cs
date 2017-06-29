@@ -130,9 +130,10 @@ namespace ExcelTools
             firstCol = firstCell.Column;
             lastRow = firstRow + _curRng.Rows.Count -2;
             lastCol = firstCol + _curRng.Columns.Count;
-            _activeRow = new ActiveRow(ActiveCell);
+            _activeRow = IsTableCell ? new ActiveRow(ActiveCell) : null;
             OnPropertyChanged(nameof(ExcelTools.ActiveRow));
-            OnPropertyChanged(nameof(CurRowNumInRng));            
+            OnPropertyChanged(nameof(CurRowNumInRng));               
+            
         }
         private void ApplicationOnSheetSelectionChange(object sh, Range target)
         {

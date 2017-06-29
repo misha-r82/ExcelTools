@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="ExcelTools.CtrlRows"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExcelTools"
+             xmlns:converters="clr-namespace:ExcelTools.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/StylesDic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+
+    </UserControl.Resources>
+    <StackPanel>
+        <StackPanel.Resources>
+            <local:ActiveRowTemplateSelector x:Key="ActiveRowTemplateSelector"/>
+            <converters:TimeToDateConverter x:Key="TimeConverter"/>
+            <converters:TestConverter x:Key="TestConverter"/>
+        </StackPanel.Resources>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Name="chkAll" Click="ChkAll_OnClick" Grid.Column="1" Margin="2" VerticalAlignment="Center"/>
+        </Grid>
+        <ListBox Name="lstActiveRow" ItemsSource="{Binding Source={x:Static local:Current.CurRegion}, Path=ActiveRow}" 
+                         ItemTemplateSelector="{StaticResource ActiveRowTemplateSelector}" HorizontalContentAlignment="Stretch">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                    <Setter Property="IsTabStop" Value="False" />
+                    <Setter Property="BorderBrush" Value="Gainsboro"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                </Style>
+                <Style TargetType="ListBox" >
+                    <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+                </Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="VerticalAlignment" Value="Bottom"/>
+                </Style>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Margin" Value="2"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                </Style>
+                <DataTemplate x:Key="StrCellTemplate">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel >
+                            <TextBlock Text="{Binding ColName}"/>
+                            <ComboBox Text="{Binding StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                    </Grid>
+
+                </DataTemplate>
+                <DataTemplate x:Key="NumericCellTemplate">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ColName}"  VerticalAlignment="Center"/>
+                            <ComboBox Text="{Binding NumVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                    </Grid>
+
+                </DataTemplate>
+                <DataTemplate x:Key="DateTimeCellTemplate">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ColName}" VerticalAlignment="Center"/>
+                            <xctk:DateTimePicker Value="{Binding DateVal}" Format="ShortDate" Width="100"/>
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                    </Grid>
+
+                </DataTemplate>
+                <DataTemplate x:Key="TimeCellTemplate">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ColName}"  VerticalAlignment="Center"/>
+                            <ComboBox IsEditable="True" Text="{Binding TimeVal, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.Resources>
+        </ListBox>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="btnFrist" Click="BtnFrist_OnClick" Style="{StaticResource SqareButton}">
+                <Image Source="img/double_arrow_left.png"/>
+            </Button>
+            <Button Name="btnPrev" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                <Image Source="img/arrow_left.png" />
+            </Button>
+            <TextBox Text="{Binding Source={x:Static local:Current.CurRegion}, Path=CurRowNumInRng}" Width="65"/>
+            <Button Name="btnNext" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                <Image Source="img/arrow_right.png" />
+            </Button>
+            <Button Name="btnLast" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                <Image Source="img/double_arrow_right.png"/>
+            </Button>
+            <Button Name="btnNewRow" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
+                <Image Source="img/asterisk.png" Margin="1" />
+            </Button>
+
+        </StackPanel>
+    </StackPanel>
+
+</UserControl>

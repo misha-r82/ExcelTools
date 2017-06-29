@@ -30,7 +30,22 @@ namespace ExcelTools.Converters
 
         }
     }
+    public class InvBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            bool val = value != null && (bool)value;
+            return !val;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+
+        }
+    }
     public class BoolToVisConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,

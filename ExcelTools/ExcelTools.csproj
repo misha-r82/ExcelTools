@@ -147,6 +147,9 @@
     <Compile Include="Calck\CtrlCalk.xaml.cs">
       <DependentUpon>CtrlCalk.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CtrlRows.xaml.cs">
+      <DependentUpon>CtrlRows.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Filters\CtrlFilterBase.xaml.cs">
       <DependentUpon>CtrlFilterBase.xaml</DependentUpon>
     </Compile>
@@ -254,6 +257,10 @@
     <Page Include="Calck\CtrlCalk.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CtrlRows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Filters\CtrlFilterBase.xaml">
       <SubType>Designer</SubType>

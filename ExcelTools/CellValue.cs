@@ -13,7 +13,8 @@ namespace ExcelTools
     class CellValue : INotifyPropertyChanged
     {
         public  enum CellValType {String, Numeric, Date, Time}
-
+        public static string TIME_FORMAT = "00:00";
+        public static string DATE_FORMAT = "";
         private object _xlVal;
         public CellValType Type { get; }
 
@@ -78,7 +79,9 @@ namespace ExcelTools
                 switch (Type)
                 {
                         case CellValType.String:
-                        return _xlVal.ToString();
+                        case CellValType.Numeric:
+                            return _xlVal.ToString();
+                        //case CellValType.Date:
                 }
                 return "";
             }
