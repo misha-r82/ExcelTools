@@ -18,15 +18,15 @@ namespace ExcelTools
         }
         public static ObservableCollection<FilterProto> Filters { get; }
 
-        private static FilterProto CreateFilter(Cell activeCell)
+        private static FilterProto CreateFilter(ExCell activeExCell)
         {           
-            switch (activeCell.Type)
+            switch (activeExCell.Value.Type)
             {
-                case CellTypes.str: return new StrFilter(activeCell);
-                case CellTypes.numeric: return new NumericFilter(activeCell);
-                case CellTypes.date: return new DateFilter(activeCell);
-                case CellTypes.time: return new TimeFilter(activeCell);
-                default: return new StrFilter(activeCell);
+                case CellValue.CellValType.String: return new StrFilter(activeExCell);
+                case CellValue.CellValType.Numeric: return new NumericFilter(activeExCell);
+                case  CellValue.CellValType.Date: return new DateFilter(activeExCell);
+                case CellValue.CellValType.Time: return new TimeFilter(activeExCell);
+                default: return new StrFilter(activeExCell);
             }
         }
 
@@ -38,7 +38,7 @@ namespace ExcelTools
         
         public static void AddFilter(Range activeCell)
         {
-            var cell = new Cell(activeCell, true);
+            var cell = new ExCell(activeCell, true);
             var flt = CreateFilter(cell);
             if (flt != null && !Filters.Contains(flt)) Filters.Add(flt);
         }

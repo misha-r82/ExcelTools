@@ -15,7 +15,7 @@ namespace ExcelTools.Converters
             System.Globalization.CultureInfo culture)
         {
             if (value == null) return "00:00";
-            if (value is Cell) value = ((Cell) value).Value;
+            if (value is ExCell) value = ((ExCell) value).Value;
             return  ((TimeSpan)value).ToString(@"hh\:mm");
         }
 

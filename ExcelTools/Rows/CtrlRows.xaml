@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/StylesDic.xaml"/>
+                <ResourceDictionary Source="../Theme/StylesDic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
@@ -21,7 +21,7 @@
         <StackPanel.Resources>
             <local:ActiveRowTemplateSelector x:Key="ActiveRowTemplateSelector"/>
             <converters:TimeToDateConverter x:Key="TimeConverter"/>
-            <converters:TestConverter x:Key="TestConverter"/>
+            
         </StackPanel.Resources>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -58,26 +58,13 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel >
                             <TextBlock Text="{Binding ColName}"/>
-                            <ComboBox Text="{Binding StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
+                            <ComboBox Text="{Binding Value.StrVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
                         </StackPanel>
                         <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
                     </Grid>
 
                 </DataTemplate>
-                <DataTemplate x:Key="NumericCellTemplate">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding ColName}"  VerticalAlignment="Center"/>
-                            <ComboBox Text="{Binding NumVal}" ItemsSource="{Binding ValList}" IsEditable="True" Width="150" />
-                        </StackPanel>
-                        <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
-                    </Grid>
 
-                </DataTemplate>
                 <DataTemplate x:Key="DateTimeCellTemplate">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -86,7 +73,9 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding ColName}" VerticalAlignment="Center"/>
-                            <xctk:DateTimePicker Value="{Binding DateVal}" Format="ShortDate" Width="100"/>
+                            <xctk:DateTimePicker Value="{Binding Value.XlVal}" Format="Custom"
+                             FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
+                             TimePickerAllowSpin="False"/>
                         </StackPanel>
                         <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
                     </Grid>
@@ -100,10 +89,10 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding ColName}"  VerticalAlignment="Center"/>
-                            <ComboBox IsEditable="True" Text="{Binding TimeVal, Converter={StaticResource TimeConverter}}" ItemsSource="{Binding ValList}">
+                            <ComboBox IsEditable="True" Text="{Binding Value.StrVal}" ItemsSource="{Binding ValList}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Path=., Converter={StaticResource TimeConverter}}"/>
+                                        <TextBlock Text="{Binding Path=.}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
@@ -115,20 +104,20 @@
         </ListBox>
         <StackPanel Orientation="Horizontal">
             <Button Name="btnFrist" Click="BtnFrist_OnClick" Style="{StaticResource SqareButton}">
-                <Image Source="img/double_arrow_left.png"/>
+                <Image Source="../img/double_arrow_left.png"/>
             </Button>
             <Button Name="btnPrev" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
-                <Image Source="img/arrow_left.png" />
+                <Image Source="../img/arrow_left.png" />
             </Button>
             <TextBox Text="{Binding Source={x:Static local:Current.CurRegion}, Path=CurRowNumInRng}" Width="65"/>
             <Button Name="btnNext" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
-                <Image Source="img/arrow_right.png" />
+                <Image Source="../img/arrow_right.png" />
             </Button>
             <Button Name="btnLast" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
-                <Image Source="img/double_arrow_right.png"/>
+                <Image Source="../img/double_arrow_right.png"/>
             </Button>
             <Button Name="btnNewRow" Click="BtnFrist_OnClick"  Style="{StaticResource SqareButton}">
-                <Image Source="img/asterisk.png" Margin="1" />
+                <Image Source="../img/asterisk.png" Margin="1" />
             </Button>
 
         </StackPanel>

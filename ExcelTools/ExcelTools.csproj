@@ -140,14 +140,13 @@
     <Compile Include="Calck\CalculatorCommands.cs" />
     <Compile Include="Calck\CalculatorMemoryToVisibilityConverter.cs" />
     <Compile Include="Calck\CalculatorUtilities.cs" />
-    <Compile Include="Cell.cs" />
-    <Compile Include="CellValue.cs" />
-    <Compile Include="ColRng.cs" />
+    <Compile Include="ExCell.cs" />
+    <Compile Include="Rows\CellValue.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="Calck\CtrlCalk.xaml.cs">
       <DependentUpon>CtrlCalk.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CtrlRows.xaml.cs">
+    <Compile Include="Rows\CtrlRows.xaml.cs">
       <DependentUpon>CtrlRows.xaml</DependentUpon>
     </Compile>
     <Compile Include="Filters\CtrlFilterBase.xaml.cs">
@@ -258,7 +257,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CtrlRows.xaml">
+    <Page Include="Rows\CtrlRows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

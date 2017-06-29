@@ -58,8 +58,8 @@ namespace ExcelTools
         {
             FilterRng = Current.CurRegion.ActiveCell;
             int col = FilterRng.Column - Current.CurRegion.firstCol;
-            Name = Current.CurRegion.ActiveRow.Cells[col].ColName;
-            var tmpCell = new Cell(FilterRng, true);
+            Name = Current.CurRegion.ActiveRow.ExCells[col].ColName;
+            var tmpCell = new ExCell(FilterRng, true);
             ValueList = tmpCell.ValList;
             ColNum =  col + 1;
             Enabled = true;

@@ -28,14 +28,14 @@ namespace ExcelTools
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             ContentPresenter pres = container as ContentPresenter;
-            var cell = item as Cell;
+            var cell = item as ExCell;
             if (cell == null) return null;
-            switch (cell.Type) 
+            switch (cell.Value.Type) 
             {
-                case CellTypes.str: return pres.FindResource("StrCellTemplate") as DataTemplate;
-                case CellTypes.numeric: return pres.FindResource("NumericCellTemplate") as DataTemplate; 
-                case CellTypes.date: return pres.FindResource("DateTimeCellTemplate") as DataTemplate;
-                case CellTypes.time: return pres.FindResource("TimeCellTemplate") as DataTemplate;
+                case CellValue.CellValType.String: return pres.FindResource("StrCellTemplate") as DataTemplate;
+                case CellValue.CellValType.Numeric: return pres.FindResource("StrCellTemplate") as DataTemplate; 
+                case CellValue.CellValType.Date: return pres.FindResource("DateTimeCellTemplate") as DataTemplate;
+                case CellValue.CellValType.Time: return pres.FindResource("TimeCellTemplate") as DataTemplate;
             }
             return null;
         }

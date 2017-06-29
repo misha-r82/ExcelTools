@@ -49,9 +49,9 @@ namespace ExcelTools
                 case "btnNewRow":
                     var oldRow = curReg.ActiveRow;
                     curReg.CurRowNumInRng = curReg.CurRng.Rows.Count;
-                    for (int i = 0; i < oldRow.Cells.Length; i++)
-                        if (oldRow.Cells[i].IsSelected)
-                            curReg.ActiveRow.Cells[i].Rng.Value2 = oldRow.Cells[i].Rng.Value2;
+                    for (int i = 0; i < oldRow.ExCells.Length; i++)
+                        if (oldRow.ExCells[i].IsSelected)
+                            curReg.ActiveRow.ExCells[i].Rng.Value2 = oldRow.ExCells[i].Rng.Value2;
                     break;
             }
         }
@@ -60,7 +60,7 @@ namespace ExcelTools
         private void ChkAll_OnClick(object sender, RoutedEventArgs e)
         {
             var val = chkAll.IsChecked == true;
-            foreach (Cell cell in Current.CurRegion.ActiveRow.Cells)
+            foreach (ExCell cell in Current.CurRegion.ActiveRow.ExCells)
                 cell.IsSelected = val;
         }
 

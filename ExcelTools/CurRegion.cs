@@ -58,7 +58,7 @@ namespace ExcelTools
             get
             {
                 /*if (_activeRow == null) Debug.WriteLine("null");
-                else Debug.WriteLine(_activeRow.Cells[0]);*/
+                else Debug.WriteLine(_activeRow.ExCells[0]);*/
                 return _activeRow;
             }
         }

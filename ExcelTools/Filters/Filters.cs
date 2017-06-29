@@ -30,7 +30,7 @@ namespace ExcelTools
             get { return string.Format("*{0}*", Patt); }
         }
 
-        public StrFilter(Cell cell) : base()
+        public StrFilter(ExCell exCell) : base()
         {
             _patt = "";
         }
@@ -49,9 +49,9 @@ namespace ExcelTools
         {
             get { return string.Format("<={0}", To); }
         }
-        public NumericFilter(Cell cell) : base()
+        public NumericFilter(ExCell exCell) : base()
         {
-            var values = cell.ValList.OfType<double>().ToArray();
+            var values = exCell.ValList.OfType<double>().ToArray();
             if (values.Any())
             {
                 From = values.Min();
@@ -65,7 +65,7 @@ namespace ExcelTools
         private DateTime _from;
         private DateTime _to;
         public override string Name { get { return base.Name + " между"; } }
-        public DateFilter(Cell cell) : base()
+        public DateFilter(ExCell exCell) : base()
         {
             {
                 From = DateTime.Now.AddDays(-1);
@@ -120,9 +120,9 @@ namespace ExcelTools
         {
             get { return string.Format("<={0}", To); }
         }
-        public TimeFilter(Cell cell) : base()
+        public TimeFilter(ExCell exCell) : base()
         {
-            ValList = cell.ValList.OfType<TimeSpan>().ToArray();
+            ValList = exCell.ValList.OfType<TimeSpan>().ToArray();
             if (ValList.Any())
             {
                 From = ValList.Min();
