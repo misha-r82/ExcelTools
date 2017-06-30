@@ -19,7 +19,10 @@ namespace ExcelTools
         private object _xlVal;
         private string _strVal;
         public CellValType Type { get; }
-
+        public double ValDouble { get { return (double) _xlVal; } }
+        public TimeSpan ValTime { get { return DateTime.FromOADate(ValDouble).TimeOfDay; } }
+        public DateTime ValDate { get { return (DateTime) _xlVal; } }
+                        
 
         public CellValue(Range rng)
         {

@@ -65,9 +65,9 @@
     </DataTemplate>
     <DataTemplate x:Key="NumericFilterTemplate">
         <StackPanel Orientation="Horizontal">
-            <TextBox Text="{Binding From}" Width="110"/>
+            <TextBox Text="{Binding From, Mode=TwoWay}" Width="110"/>
             <TextBlock Text=" и "/>
-            <TextBox Text="{Binding To}" Width="110"/>
+            <TextBox Text="{Binding To, Mode=TwoWay}" Width="110"/>
         </StackPanel>
     </DataTemplate>
     <DataTemplate x:Key="DateFilterTemplate">

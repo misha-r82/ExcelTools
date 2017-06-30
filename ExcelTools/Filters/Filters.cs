@@ -20,8 +20,7 @@ namespace ExcelTools
             {
                 if(_patt == value) return;
                 _patt = value;
-                OnPropertyChanged();
-                SetFilter();
+                OnPropertyChanged();                
             }
         }
 
@@ -38,8 +37,31 @@ namespace ExcelTools
 
     class NumericFilter : FilterProto
     {
-        public double From { get; set; }
-        public double To { get; set; }
+        private double _from;
+        private double _to;
+
+        public double From
+        {
+            get { return _from; }
+            set
+            {
+                if (value == _from) return;
+                _from = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double To
+        {
+            get { return _to; }
+            set
+            {
+                if (value == _to) return;
+                _to = value;
+                OnPropertyChanged();
+            }
+        }
+
         public override string Name { get { return base.Name + " между"; } }
         protected override object Criteria1
         {
@@ -51,13 +73,14 @@ namespace ExcelTools
         }
         public NumericFilter(ExCell exCell) : base()
         {
-            var values = exCell.ValList.OfType<double>().ToArray();
+            var values = exCell.ValList.Where(v => v.Type == CellValue.CellValType.Numeric).
+                Select(v => v.ValDouble).ToArray();
             if (values.Any())
             {
-                From = values.Min();
-                To = values.Max();
+                _from = values.Min();
+                _to = values.Max();
             }
-            else From = To = 0;
+            else From = _from = _to;
         }
     }
     class DateFilter : FilterProto
@@ -108,8 +131,31 @@ namespace ExcelTools
 
     class TimeFilter : FilterProto
     {
-        public TimeSpan From { get; set; }
-        public TimeSpan To { get; set; }
+        private TimeSpan _from;
+        private TimeSpan _to;
+
+        public TimeSpan From
+        {
+            get { return _from; }
+            set
+            {
+                if (value == _from) return;
+                _from = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan To
+        {
+            get { return _to; }
+            set
+            {
+                if (value == _to) return;
+                _to = value;
+                OnPropertyChanged();
+            }
+        }
+
         public override string Name { get { return base.Name + " между"; } }
         public TimeSpan[] ValList { get; private set; }
         protected override object Criteria1
@@ -122,16 +168,17 @@ namespace ExcelTools
         }
         public TimeFilter(ExCell exCell) : base()
         {
-            ValList = exCell.ValList.OfType<TimeSpan>().ToArray();
+            ValList = exCell.ValList.Where(v=>v.Type == CellValue.CellValType.Time).
+                Select(v=>v.ValTime).OrderBy(v=>v).ToArray();
             if (ValList.Any())
             {
-                From = ValList.Min();
-                To = ValList.Max();                
+                _from = ValList.Min();
+                _to = ValList.Max();                
             }
             else
             {
-                From = new TimeSpan(0);
-                To = new TimeSpan(23,59,59);
+                _from = new TimeSpan(0);
+                _to = new TimeSpan(23,59,59);
             }
 
         }        

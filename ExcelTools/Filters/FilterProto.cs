@@ -62,7 +62,7 @@ namespace ExcelTools
             var tmpCell = new ExCell(FilterRng, true);
             ValueList = tmpCell.ValList;
             ColNum =  col + 1;
-            Enabled = true;
+            _enabled = true;
         }
         public void SetFilter()
         {
