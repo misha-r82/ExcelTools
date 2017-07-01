@@ -42,22 +42,6 @@ namespace ExcelTools
                 OnPropertyChanged();
             }
         }
-        private bool IsTimeFormat(string cellFormat)
-        {
-            return cellFormat.Contains('h');
-        }
-        private bool IsNumericFormat(string cellFormat)
-        {
-            if (cellFormat.Contains('0')) return true;
-            if (cellFormat.Contains('#')) return true;
-            if (cellFormat.Contains("%")) return true;
-            return false;
-        }
-        private bool IsDateFormat(string cellFormat)
-        {
-            if (IsTimeFormat(cellFormat)) return false;
-            return cellFormat.Contains('m') || cellFormat.Contains('y') || cellFormat.Contains('d');
-        }
         public ExCell(Range rng, bool setValList)
         {
             _rng = rng;

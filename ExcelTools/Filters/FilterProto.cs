@@ -11,11 +11,16 @@ namespace ExcelTools
 {
     public abstract class FilterProto : INotifyPropertyChanged, IEquatable<FilterProto>
     {
-        private int ColNum { get; }
+        private int ColNum { get; set; }
         public virtual string Name { get; }
         public object[] ValueList { get; set; }
         private object[] _selectedValues;
-
+        private Range FilterRng { get; set; }
+        protected virtual object Criteria1 { get; }
+        protected virtual object Criteria2 { get; }
+        private bool _enabled;
+        private bool _isListMode;
+        private bool _canFilter;
         public object[] SelectedValues
         {
             get { return _selectedValues; }
@@ -25,13 +30,6 @@ namespace ExcelTools
                 OnPropertyChanged();
             }
         }
-
-        private Range FilterRng { get; set; }
-        protected virtual object Criteria1 { get; }
-        protected virtual object Criteria2 { get; }
-        private bool _enabled;
-        private bool _isListMode;
-
         public bool IsListMode
         {
             get { return _isListMode; }
@@ -62,11 +60,12 @@ namespace ExcelTools
             var tmpCell = new ExCell(FilterRng, true);
             ValueList = tmpCell.ValList;
             ColNum =  col + 1;
+            _canFilter = true;
             _enabled = true;
         }
         public void SetFilter()
         {
-            if (Enabled)
+            if (CanFilter && Enabled)
             {
                 RemoveFilter();
                 try
@@ -100,6 +99,34 @@ namespace ExcelTools
                 MessageBox.Show("Не удалось снять фильтр!");
             }
         }
+
+        public void OnRangeChange()
+        {
+            var cols = Current.CurRegion.ActiveRow.ExCells;
+            CanFilter = false;
+            int i = 0;
+            for (; i < cols.Length; i++)
+            {
+                if (cols[i].ColName != Name) continue;
+                CanFilter = true;
+                break;
+            }
+            if (!CanFilter) return;
+            ColNum = cols[i].Rng.Column;
+            SetFilter();
+        }
+
+        public bool CanFilter
+        {
+            get { return _canFilter; }
+            set
+            {
+                if (value == _canFilter) return;
+                _canFilter = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

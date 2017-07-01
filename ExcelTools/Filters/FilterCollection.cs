@@ -16,15 +16,9 @@ namespace ExcelTools
         static FilterCollection()
         {
             Filters = new ObservableCollection<FilterProto>();
-            Filters.CollectionChanged += FiltersOnCollectionChanged;
         }
 
-        private static void FiltersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
-                foreach (var filter in Filters)
-                    filter.SetFilter();
-        }
+
 
         public static ObservableCollection<FilterProto> Filters { get; }
 

@@ -21,7 +21,7 @@ using ExcelTools.Annotations;
 using Microsoft.Office.Interop.Excel;
 using static ExcelTools.Current;
 using Button = System.Windows.Controls.Button;
-
+using ExcelTools.Filters;
 
 namespace ExcelTools
 {
@@ -35,6 +35,7 @@ namespace ExcelTools
             InitializeComponent();
             DataContext = this;
             TabMan.SetTabCtrl(mainTab);
+            FiltersMan.Listen();
         }
 
 

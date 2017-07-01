@@ -135,12 +135,13 @@
     <Compile Include="ActionsPaneControl1.Designer.cs">
       <DependentUpon>ActionsPaneControl1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ActiveRow.cs" />
+    <Compile Include="Rows\ActiveRow.cs" />
     <Compile Include="Calck\Calculator.cs" />
     <Compile Include="Calck\CalculatorCommands.cs" />
     <Compile Include="Calck\CalculatorMemoryToVisibilityConverter.cs" />
     <Compile Include="Calck\CalculatorUtilities.cs" />
-    <Compile Include="ExCell.cs" />
+    <Compile Include="Rows\ExCell.cs" />
+    <Compile Include="Filters\FiltersMan.cs" />
     <Compile Include="Rows\CellValue.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="Calck\CtrlCalk.xaml.cs">
@@ -155,7 +156,7 @@
     <Compile Include="Filters\CtrlFilters.xaml.cs">
       <DependentUpon>CtrlFilters.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CurRegion.cs" />
+    <Compile Include="Rows\CurRegion.cs" />
     <Compile Include="ExTools.cs" />
     <Compile Include="Filters\FilterCollection.cs" />
     <Compile Include="Filters\FilterProto.cs" />
