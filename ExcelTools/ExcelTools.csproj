@@ -135,6 +135,7 @@
     <Compile Include="ActionsPaneControl1.Designer.cs">
       <DependentUpon>ActionsPaneControl1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\FilterSetter.cs" />
     <Compile Include="Rows\ActiveRow.cs" />
     <Compile Include="Calck\Calculator.cs" />
     <Compile Include="Calck\CalculatorCommands.cs" />

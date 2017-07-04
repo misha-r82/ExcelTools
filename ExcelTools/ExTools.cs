@@ -13,6 +13,10 @@ namespace ExcelTools
         public static Range RowByCell(Range cell)
         {
             if (cell.Count != 1) throw new ArgumentException("Попытка создать ActiveRow из диапазона, содержащего не 1 ячейку!");
+            if (!Current.CurRegion.IsTableCell)
+            {
+                
+            }
             Range curRng = cell.CurrentRegion;
             int colCount = curRng.Columns.Count;
             int row = cell.Row;

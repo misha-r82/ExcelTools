@@ -23,7 +23,7 @@ namespace ExcelTools.Filters
             if (propertyChangedEventArgs.PropertyName != "ActiveRow") return;
             if (!string.IsNullOrEmpty(_prewRangeAddr) && _prewRangeAddr != Current.CurRegion.CurRng.Address)
                 foreach (var filter in FilterCollection.Filters)
-                    filter.SetFilter();
+                    filter.OnRangeChange();
             _prewRangeAddr = Current.CurRegion.CurRng.Address;
 
 

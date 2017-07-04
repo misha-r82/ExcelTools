@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -10,14 +11,36 @@ namespace ExcelTools
     public class ActiveRow : IEnumerable<ExCell>
     {
         public ExCell[] ExCells;
+        public PivotField[] PivotFields;
         public Range RowRng { get; set; }
         public ActiveRow(Range rng)
         {
-            RowRng = ExTools.RowByCell(rng);
-            ExCells = new ExCell[RowRng.Count];
             int i = 0;
-            foreach (object cell in RowRng.Cells)
-                ExCells[i++] = new ExCell((Range) cell, true);
+            if (Current.CurRegion.IsTableCell)
+            {
+                PivotFields = new PivotField[0];
+                RowRng = ExTools.RowByCell(rng);
+                ExCells = new ExCell[RowRng.Count];
+                foreach (object cell in RowRng.Cells)
+                    ExCells[i++] = new ExCell((Range) cell, true);                
+            }
+            else
+            {
+                
+                try
+                {
+                    ExCells = new ExCell[0];
+                    var fields = (PivotFields)Current.CurRegion.PivotTable.PivotFields();
+                    PivotFields = new PivotField[fields.Count];
+                    for (; i <= fields.Count; i++)
+                        PivotFields[i] = (PivotField) fields.Item(i);
+                }
+                catch (Exception e) 
+                { }                
+            }
+
+            
+
         }
 
         public IEnumerator<ExCell> GetEnumerator()
@@ -28,6 +51,6 @@ namespace ExcelTools
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ExCells.GetEnumerator();
-        }
+         }
     }
 }

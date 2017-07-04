@@ -50,7 +50,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Background="Gainsboro">
-            <TextBlock Text="{Binding Name}" Margin="5,0,0,0"/>
+            <TextBlock Text="{Binding Caption}" Margin="5,0,0,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Name="btnDelete" Click="BtnDelete_OnClick">
                     <Image Source="../img/delete.png"/>

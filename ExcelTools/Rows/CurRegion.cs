@@ -25,6 +25,7 @@ namespace ExcelTools
     {
         public CurRegion()
         {
+            PivotTable = null;
             ActiveWs.Application.SheetSelectionChange += ApplicationOnSheetSelectionChange;
         }
 
@@ -41,6 +42,9 @@ namespace ExcelTools
         public Worksheet ActiveWs { get { return (Worksheet)ThisWorkbook.app.ActiveSheet; } }
         public Range Selection { get { return _selection; } }
         public Range ActiveCell { get { return _activeCell; } }
+
+        public PivotTable PivotTable { get; private set; }
+
 
         public bool IsWorkSheet
         {
@@ -89,6 +93,7 @@ namespace ExcelTools
         {
             get
             {
+                if (!IsTableCell) return -1;
                 if (_activeRow == null) return -1;
                 return _activeRow.RowRng.Row - firstRow + 1;
             }
@@ -106,21 +111,7 @@ namespace ExcelTools
 
         public void Reload()
         {
-            /*try
-            {
-                var tmp = (PivotTable)ActiveWs.PivotTables(1);
-                var fields = (PivotFields)tmp.PivotFields();
-                for (int i = 1; i <= fields.Count; i++)
-                {
-                    var field = (PivotField)fields.Item(i);
-                    XlPivotFieldDataType type = field.DataType;
-                    Debug.WriteLine(field.Name + "-"+type);
-                }
-            }
-            catch (Exception e)
-            {
 
-            }*/
             
             _selection = (Range)ThisWorkbook.app.Selection;
             _activeCell = ThisWorkbook.app.ActiveCell;
@@ -130,7 +121,7 @@ namespace ExcelTools
             firstCol = firstCell.Column;
             lastRow = firstRow + _curRng.Rows.Count -2;
             lastCol = firstCol + _curRng.Columns.Count;
-            _activeRow = IsTableCell ? new ActiveRow(ActiveCell) : null;
+            _activeRow = new ActiveRow(ActiveCell);
             OnPropertyChanged(nameof(ExcelTools.ActiveRow));
             OnPropertyChanged(nameof(CurRowNumInRng));               
             

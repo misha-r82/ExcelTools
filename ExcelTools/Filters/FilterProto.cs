@@ -5,22 +5,24 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using ExcelTools.Annotations;
+using ExcelTools.Filters;
 using Microsoft.Office.Interop.Excel;
 
 namespace ExcelTools
 {
     public abstract class FilterProto : INotifyPropertyChanged, IEquatable<FilterProto>
     {
-        private int ColNum { get; set; }
-        public virtual string Name { get; }
-        public object[] ValueList { get; set; }
+        public string Name { get; }
+        public CellValue[] ValueList { get; set; }
         private object[] _selectedValues;
-        private Range FilterRng { get; set; }
-        protected virtual object Criteria1 { get; }
+  protected virtual object Criteria1 { get; }
         protected virtual object Criteria2 { get; }
+        public FilterSetter Setter { get; set; }
         private bool _enabled;
         private bool _isListMode;
         private bool _canFilter;
+
+        public abstract string Caption { get; }
         public object[] SelectedValues
         {
             get { return _selectedValues; }
@@ -54,51 +56,18 @@ namespace ExcelTools
         }
         public FilterProto()
         {
-            FilterRng = Current.CurRegion.ActiveCell;
+            var FilterRng = Current.CurRegion.ActiveCell;
             int col = FilterRng.Column - Current.CurRegion.firstCol;
+            Setter = new TableFilterSetter(this, col + 1, FilterRng);
             Name = Current.CurRegion.ActiveRow.ExCells[col].ColName;
             var tmpCell = new ExCell(FilterRng, true);
             ValueList = tmpCell.ValList;
-            ColNum =  col + 1;
             _canFilter = true;
             _enabled = true;
         }
-        public void SetFilter()
-        {
-            if (CanFilter && Enabled)
-            {
-                RemoveFilter();
-                try
-                {
-                    if (IsListMode)
-                    {
-                        if (SelectedValues.Length == 0) return;
-                        var strArr = SelectedValues.Select(v => v.ToString()).ToArray();
-                        FilterRng.CurrentRegion.AutoFilter(ColNum, strArr, XlAutoFilterOperator.xlFilterValues,
-                            Type.Missing, true);
-                        return;
-                    }
-                    if (Criteria2 == null) FilterRng.AutoFilter(ColNum, Criteria1);   
-                    else FilterRng.AutoFilter(ColNum, Criteria1, XlAutoFilterOperator.xlAnd, Criteria2);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Не удалось установить фильтр!");
-                }
-
-            }
-        }
-        public void RemoveFilter()
-        {
-            try
-            {
-                FilterRng.AutoFilter(ColNum);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Не удалось снять фильтр!");
-            }
-        }
+        public void SetFilter() { Setter.SetFilter(Criteria1, Criteria2); }
+        public void RemoveFilter() { Setter.RemoveFilter(); }
+        
 
         public void OnRangeChange()
         {
@@ -107,12 +76,13 @@ namespace ExcelTools
             int i = 0;
             for (; i < cols.Length; i++)
             {
-                if (cols[i].ColName != Name) continue;
+                if (!string.Equals(cols[i].ColName, Name, StringComparison.OrdinalIgnoreCase)) continue;
                 CanFilter = true;
                 break;
             }
             if (!CanFilter) return;
-            ColNum = cols[i].Rng.Column;
+            RemoveFilter(); // со старого диапазона
+            Setter = new TableFilterSetter(this, cols[i].Rng.Column, cols[i].Rng);
             SetFilter();
         }
 
@@ -140,7 +110,7 @@ namespace ExcelTools
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return ColNum == other.ColNum && string.Equals(Name, other.Name) && Equals(Criteria1, other.Criteria1) && Equals(Criteria2, other.Criteria2);
+            return string.Equals(Name, other.Name) && Equals(Criteria1, other.Criteria1) && Equals(Criteria2, other.Criteria2);
         }
 
         public override bool Equals(object obj)
@@ -155,8 +125,7 @@ namespace ExcelTools
         {
             unchecked
             {
-                var hashCode = ColNum;
-                hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
+                var hashCode = Name != null ? Name.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ (Criteria1 != null ? Criteria1.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Criteria2 != null ? Criteria2.GetHashCode() : 0);
                 return hashCode;
