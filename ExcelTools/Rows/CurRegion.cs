@@ -27,8 +27,8 @@ namespace ExcelTools
         {
             PivotTable = null;
             ActiveWs.Application.SheetSelectionChange += ApplicationOnSheetSelectionChange;
+            ActiveWs.Application.SheetActivate += Application_SheetActivate;
         }
-
         public int firstRow, lastRow, firstCol, lastCol;
         private Range _selection;
         private Range _activeCell;
@@ -111,8 +111,7 @@ namespace ExcelTools
 
         public void Reload()
         {
-
-            
+            if (!IsWorkSheet) return;
             _selection = (Range)ThisWorkbook.app.Selection;
             _activeCell = ThisWorkbook.app.ActiveCell;
             _curRng = _activeCell.CurrentRegion;
@@ -126,12 +125,16 @@ namespace ExcelTools
             OnPropertyChanged(nameof(CurRowNumInRng));               
             
         }
-        private void ApplicationOnSheetSelectionChange(object sh, Range target)
+        private void Application_SheetActivate(object sh)
         {
-            var sheet =  sh as Worksheet;
+            var sheet = sh as Worksheet;
             IsWorkSheet = sheet.Type == XlSheetType.xlWorksheet;
             IsTableCell = ((PivotTables)sheet.PivotTables()).Count == 0;
-            if (!IsWorkSheet) return;
+            Reload();
+        }
+        private void ApplicationOnSheetSelectionChange(object sh, Range target)
+        {
+
             Reload();
         }
 

@@ -53,6 +53,7 @@ namespace ExcelTools
         
         public static void AddFilter(Range activeCell)
         {
+            if (activeCell == null) return;
             var cell = new ExCell(activeCell, true);
             var flt = CreateFilter(cell);
             if (flt != null && !Filters.Contains(flt)) Filters.Add(flt);

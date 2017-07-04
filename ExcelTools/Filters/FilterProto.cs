@@ -71,18 +71,8 @@ namespace ExcelTools
 
         public void OnRangeChange()
         {
-            var cols = Current.CurRegion.ActiveRow.ExCells;
-            CanFilter = false;
-            int i = 0;
-            for (; i < cols.Length; i++)
-            {
-                if (!string.Equals(cols[i].ColName, Name, StringComparison.OrdinalIgnoreCase)) continue;
-                CanFilter = true;
-                break;
-            }
+            Setter = new TableFilterSetter(this);
             if (!CanFilter) return;
-            RemoveFilter(); // со старого диапазона
-            Setter = new TableFilterSetter(this, cols[i].Rng.Column, cols[i].Rng);
             SetFilter();
         }
 
