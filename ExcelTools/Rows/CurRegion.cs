@@ -17,7 +17,7 @@ namespace ExcelTools
         static Current()
         {
             CurRegion = new CurRegion();
-            CurRegion.Reload();
+            CurRegion.Init();
             CurRegion.Wnd = 50;
         }
     }
@@ -25,7 +25,6 @@ namespace ExcelTools
     {
         public CurRegion()
         {
-            PivotTable = null;
             ActiveWs.Application.SheetSelectionChange += ApplicationOnSheetSelectionChange;
             ActiveWs.Application.SheetActivate += Application_SheetActivate;
         }
@@ -42,9 +41,6 @@ namespace ExcelTools
         public Worksheet ActiveWs { get { return (Worksheet)ThisWorkbook.app.ActiveSheet; } }
         public Range Selection { get { return _selection; } }
         public Range ActiveCell { get { return _activeCell; } }
-
-        public PivotTable PivotTable { get; private set; }
-
 
         public bool IsWorkSheet
         {
@@ -109,6 +105,10 @@ namespace ExcelTools
             }
         }
 
+        public void Init()
+        {
+            Application_SheetActivate(ActiveWs);
+        }
         public void Reload()
         {
             if (!IsWorkSheet) return;
@@ -134,7 +134,6 @@ namespace ExcelTools
         }
         private void ApplicationOnSheetSelectionChange(object sh, Range target)
         {
-
             Reload();
         }
 

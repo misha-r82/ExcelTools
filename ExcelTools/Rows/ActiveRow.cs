@@ -15,12 +15,12 @@ namespace ExcelTools
         public Range RowRng { get; set; }
         public ActiveRow(Range rng)
         {
-            int i = 0;
             if (Current.CurRegion.IsTableCell)
             {
                 PivotFields = new PivotField[0];
                 RowRng = ExTools.RowByCell(rng);
                 ExCells = new ExCell[RowRng.Count];
+                int i = 0;
                 foreach (object cell in RowRng.Cells)
                     ExCells[i++] = new ExCell((Range) cell, true);                
             }
@@ -30,13 +30,22 @@ namespace ExcelTools
                 try
                 {
                     ExCells = new ExCell[0];
-                    var fields = (PivotFields)Current.CurRegion.PivotTable.PivotFields();
+                    PivotTable pTbl;
+                    try
+                    {
+                        pTbl = Current.CurRegion.CurRng.PivotTable;
+                    }
+                    catch (Exception e)
+                    {
+                        pTbl = (PivotTable)Current.CurRegion.ActiveWs.PivotTables(1);
+                    }
+                    var fields = (PivotFields)pTbl.PivotFields();
                     PivotFields = new PivotField[fields.Count];
-                    for (; i <= fields.Count; i++)
+                    for (int i = 0; i < fields.Count; i++)
                         PivotFields[i] = (PivotField) fields.Item(i);
                 }
                 catch (Exception e) 
-                { }                
+                { PivotFields = new PivotField[0]; }                
             }
 
             

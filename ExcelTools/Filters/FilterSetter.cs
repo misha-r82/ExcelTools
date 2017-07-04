@@ -87,17 +87,33 @@ namespace ExcelTools.Filters
     }
     public class PivotFilterSetter : FilterSetter
     {
-        private Range _rng;
-        public PivotFilterSetter(FilterProto filter, int col, Range rng) : base(filter, col)
+        private PivotField _pivField;
+        public PivotFilterSetter(FilterProto filter) : base(filter, -1)
         {
-            _rng = rng;
+            filter.CanFilter = false;
+            int i = 0;
+            var fields = Current.CurRegion.ActiveRow.PivotFields;
+            for (; i < fields.Length; i++)
+            {
+                if (!string.Equals(fields[i].Name, filter.Name, StringComparison.OrdinalIgnoreCase)) continue;
+                filter.CanFilter = true;
+                _pivField = fields[i];
+                break;
+            }
         }
         public override void SetFilter(object criteria1, object criteria2)
         {
             if (_filter.CanFilter && _filter.Enabled)
             {
                 RemoveFilter();
-                try
+    //            ActiveSheet.PivotTables("Сводная таблица1").PivotFields("Клиент").PivotFilters._
+    //    Add2 Type:= xlCaptionContains, Value1:= "ва"
+    //ActiveSheet.PivotTables("Сводная таблица1").PivotFields("Клиент")._
+    //    ClearAllFilters
+    //ActiveSheet.PivotTables("Сводная таблица1").PivotFields("Дата покупки")._
+    //    PivotFilters.Add2 Type:= xlDateBetween, Value1:= "01.12.2016", Value2:= _
+    //    "08.12.2016"
+                /*try
                 {
                     if (_filter.IsListMode)
                     {
@@ -114,7 +130,8 @@ namespace ExcelTools.Filters
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не удалось установить фильтр!");
-                }
+                }*/
+                _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionContains, Type.Missing, criteria1);
 
             }
         }
@@ -122,7 +139,8 @@ namespace ExcelTools.Filters
         {
             try
             {
-                _rng.AutoFilter(_colnum);
+                _pivField.ClearAllFilters();
+                //_rng.AutoFilter(_colnum);
             }
             catch (Exception e)
             {

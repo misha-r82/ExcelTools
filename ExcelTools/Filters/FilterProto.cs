@@ -66,12 +66,13 @@ namespace ExcelTools
             _enabled = true;
         }
         public void SetFilter() { Setter.SetFilter(Criteria1, Criteria2); }
-        public void RemoveFilter() { Setter.RemoveFilter(); }
-        
-
+        public void RemoveFilter() { Setter.RemoveFilter(); }      
         public void OnRangeChange()
         {
-            Setter = new TableFilterSetter(this);
+            if (Current.CurRegion.ActiveRow.PivotFields == null) return;
+            if(Current.CurRegion.ActiveRow.PivotFields.Length > 0)
+                Setter = new PivotFilterSetter(this);
+            else Setter = new TableFilterSetter(this);
             if (!CanFilter) return;
             SetFilter();
         }
