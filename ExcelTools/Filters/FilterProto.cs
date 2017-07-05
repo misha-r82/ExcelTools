@@ -69,8 +69,8 @@ namespace ExcelTools
         public void RemoveFilter() { Setter.RemoveFilter(); }      
         public void OnRangeChange()
         {
-            if (Current.CurRegion.ActiveRow.PivotFields == null) return;
-            if(Current.CurRegion.ActiveRow.PivotFields.Length > 0)
+            if (Current.CurRegion.ActiveRow.PivotFields != null &&
+                Current.CurRegion.ActiveRow.PivotFields.Length > 0)
                 Setter = new PivotFilterSetter(this);
             else Setter = new TableFilterSetter(this);
             if (!CanFilter) return;

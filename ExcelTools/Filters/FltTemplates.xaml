@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary x:Class="ExcelTools.FltTemplates"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:excelTools="clr-namespace:ExcelTools"
+                    xmlns:local="clr-namespace:ExcelTools"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:converters="clr-namespace:ExcelTools.Converters">
     <DataTemplate x:Key="BaseFilterTemplate">
@@ -37,7 +37,7 @@
                             </Style>
                         </ResourceDictionary>
                     </ResourceDictionary.MergedDictionaries>
-                    <excelTools:FilterTemplateSelector x:Key="FilterTemplateSelector"/>
+                    <local:FilterTemplateSelector x:Key="FilterTemplateSelector"/>
                     
                 </ResourceDictionary>
                 
@@ -72,9 +72,13 @@
     </DataTemplate>
     <DataTemplate x:Key="DateFilterTemplate">
         <StackPanel Orientation="Horizontal">
-            <xctk:DateTimePicker Value="{Binding From}"  Format="ShortDate" Width="100" VerticalAlignment="Top"/>
+            <xctk:DateTimePicker Value="{Binding From, UpdateSourceTrigger=LostFocus}" Format="Custom"
+                             FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
+                                 Width="100" VerticalAlignment="Top"/>
             <TextBlock Text=" и "/>
-            <xctk:DateTimePicker Value="{Binding To}"  Format="ShortDate" Width="100"  VerticalAlignment="Top"/>
+            <xctk:DateTimePicker Value="{Binding To, UpdateSourceTrigger=LostFocus}"   Format="Custom"
+                             FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
+                                 Width="100"  VerticalAlignment="Top"/>
             <Expander Header="Выбрать диапазон">
                 <Grid Margin="-215,5,5,5">
                     <Grid.Resources>

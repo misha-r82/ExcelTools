@@ -11,6 +11,7 @@ namespace ExcelTools.Filters
     public class FiltersMan
     {
         private static string _prewRangeAddr;
+        private static string _prewSheetName;
 
         public static void Listen()
         {
@@ -21,10 +22,16 @@ namespace ExcelTools.Filters
         private static void CurRegionOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (propertyChangedEventArgs.PropertyName != "ActiveRow") return;
+            if (Current.CurRegion.ActiveWs.Name != _prewSheetName)
+                foreach (var filter in FilterCollection.Filters)
+                    filter.RemoveFilter();
             if (!string.IsNullOrEmpty(_prewRangeAddr) && _prewRangeAddr != Current.CurRegion.CurRng.Address)
                 foreach (var filter in FilterCollection.Filters)
                     filter.OnRangeChange();
+            
+
             _prewRangeAddr = Current.CurRegion.CurRng.Address;
+            _prewSheetName = Current.CurRegion.ActiveWs.Name;
 
 
         }
