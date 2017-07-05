@@ -12,8 +12,15 @@ using Office = Microsoft.Office.Core;
 
 namespace ExcelTools
 {
-    public partial class Лист3
+    public partial class Лист8
     {
+        private void Лист8_Startup(object sender, System.EventArgs e)
+        {
+        }
+
+        private void Лист8_Shutdown(object sender, System.EventArgs e)
+        {
+        }
 
         #region VSTO Designer generated code
 
@@ -23,16 +30,11 @@ namespace ExcelTools
         /// </summary>
         private void InternalStartup()
         {
-            this.Таблица1.Change += new Microsoft.Office.Tools.Excel.ListObjectChangeHandler(this.Таблица1_Change);
-
+            this.Startup += new System.EventHandler(Лист8_Startup);
+            this.Shutdown += new System.EventHandler(Лист8_Shutdown);
         }
-
 
         #endregion
 
-        private void Таблица1_Change(Excel.Range targetRange, ListRanges changedRanges)
-        {
-
-        }
     }
 }
