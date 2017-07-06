@@ -17,14 +17,18 @@ namespace ExcelTools.Filters
         {
             FilterCollection.Filters.CollectionChanged += FiltersOnCollectionChanged;
             Current.CurRegion.PropertyChanged += CurRegionOnPropertyChanged;
+            Current.CurRegion.ActiveWs.Application.SheetDeactivate += Application_SheetDeactivate;
+        }
+
+        private static void Application_SheetDeactivate(object Sh)
+        {
+            foreach (var filter in FilterCollection.Filters)
+                    filter.RemoveFilter();
         }
 
         private static void CurRegionOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (propertyChangedEventArgs.PropertyName != "ActiveRow") return;
-            if (Current.CurRegion.ActiveWs.Name != _prewSheetName)
-                foreach (var filter in FilterCollection.Filters)
-                    filter.RemoveFilter();
             if (!string.IsNullOrEmpty(_prewRangeAddr) && _prewRangeAddr != Current.CurRegion.CurRng.Address)
                 foreach (var filter in FilterCollection.Filters)
                     filter.OnRangeChange();

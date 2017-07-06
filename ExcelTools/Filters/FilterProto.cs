@@ -58,21 +58,33 @@ namespace ExcelTools
         {
             var FilterRng = Current.CurRegion.ActiveCell;
             int col = FilterRng.Column - Current.CurRegion.firstCol;
-            Setter = new TableFilterSetter(this, col + 1, FilterRng);
+            Setter = new TableFilterSetter(this, true);
             Name = Current.CurRegion.ActiveRow.ExCells[col].ColName;
             var tmpCell = new ExCell(FilterRng, true);
             ValueList = tmpCell.ValList;
             _canFilter = true;
             _enabled = true;
         }
-        public void SetFilter() { Setter.SetFilter(Criteria1, Criteria2); }
-        public void RemoveFilter() { Setter.RemoveFilter(); }      
+        public void SetFilter()
+        {
+            if (CanFilter && Enabled)
+            {
+                RemoveFilter();
+                Setter.SetFilter(Criteria1, Criteria2);
+            }
+        }
+        public void RemoveFilter()
+
+        {
+            if (CanFilter)
+                Setter.RemoveFilter();
+        }      
         public void OnRangeChange()
         {
             if (Current.CurRegion.ActiveRow.PivotFields != null &&
                 Current.CurRegion.ActiveRow.PivotFields.Length > 0)
                 Setter = new PivotFilterSetter(this);
-            else Setter = new TableFilterSetter(this);
+            else Setter = new TableFilterSetter(this, false);
             if (!CanFilter) return;
             SetFilter();
         }

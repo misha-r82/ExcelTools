@@ -27,7 +27,9 @@ namespace ExcelTools
         {
             ActiveWs.Application.SheetSelectionChange += ApplicationOnSheetSelectionChange;
             ActiveWs.Application.SheetActivate += Application_SheetActivate;
+            
         }
+
         public int firstRow, lastRow, firstCol, lastCol;
         private Range _selection;
         private Range _activeCell;

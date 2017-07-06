@@ -12,12 +12,11 @@ namespace ExcelTools.Filters
     public abstract class FilterSetter
     {
         protected FilterProto _filter;
-        protected int _colnum;
-        public int Col { get { return _colnum; } }
-        public FilterSetter(FilterProto filter, int col)
+        protected int _coluumn;
+        public int Col { get { return _coluumn; } }
+        public FilterSetter(FilterProto filter)
         {
-            _filter = filter;
-            _colnum = col;
+            _filter = filter;            
         }
         
         public abstract void SetFilter(object criteria1, object criteria2);
@@ -27,14 +26,12 @@ namespace ExcelTools.Filters
     public class TableFilterSetter : FilterSetter
     {
         private Range _rng;
-        public TableFilterSetter(FilterProto filter, int col, Range rng) : base(filter, col)
+        public TableFilterSetter(FilterProto filter, bool isFilterCreated) : base(filter)
         {
-            _rng = rng;
-        }
-        // только при изменении диапазона фильтра
-        public TableFilterSetter(FilterProto filter) : base(filter, filter.Setter.Col)
-        {
+            _rng = Current.CurRegion.ActiveCell;
+            _coluumn = _rng.Column - Current.CurRegion.firstCol + 1;
             var cols = Current.CurRegion.ActiveRow.ExCells;
+            if (isFilterCreated) return;
             filter.CanFilter = false;
             int i = 0;
             for (; i < cols.Length; i++)
@@ -42,41 +39,38 @@ namespace ExcelTools.Filters
                 if (!string.Equals(cols[i].ColName, filter.Name, StringComparison.OrdinalIgnoreCase)) continue;
                 filter.CanFilter = true;
                 _rng = cols[i].Rng;
+                _coluumn = i + 1;
                 break;
             }
 
         }
         public override void SetFilter(object criteria1, object criteria2)
         {
-            if (_filter.CanFilter && _filter.Enabled)
-            {
-                RemoveFilter();
+
                 try
                 {
                     if (_filter.IsListMode)
                     {
                         if (_filter.SelectedValues.Length == 0) return;
                         var strArr = _filter.SelectedValues.Select(v => v.ToString()).ToArray();
-                        _rng.CurrentRegion.AutoFilter(_colnum, strArr, XlAutoFilterOperator.xlFilterValues,
+                        _rng.CurrentRegion.AutoFilter(_coluumn, strArr, XlAutoFilterOperator.xlFilterValues,
                             Type.Missing, true);
                         return;
                     }
                     if (criteria2 == null)
-                        _rng.AutoFilter(_colnum, criteria1);
-                    else _rng.AutoFilter(_colnum, criteria1, XlAutoFilterOperator.xlAnd, criteria2);
+                        _rng.AutoFilter(_coluumn, criteria1);
+                    else _rng.AutoFilter(_coluumn, criteria1, XlAutoFilterOperator.xlAnd, criteria2);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Не удалось установить фильтр!");
                 }
-
-            }
         }
         public override void RemoveFilter()
         {
             try
             {
-                _rng.AutoFilter(_colnum);
+                _rng.AutoFilter(_coluumn);
             }
             catch (Exception e)
             {

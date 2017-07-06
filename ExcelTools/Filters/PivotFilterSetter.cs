@@ -8,7 +8,7 @@ namespace ExcelTools.Filters
     public class PivotFilterSetter : FilterSetter
     {
         private PivotField _pivField;
-        public PivotFilterSetter(FilterProto filter) : base(filter, -1)
+        public PivotFilterSetter(FilterProto filter) : base(filter)
         {
             filter.CanFilter = false;
             int i = 0;
