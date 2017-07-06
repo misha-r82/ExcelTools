@@ -30,31 +30,37 @@ namespace ExcelTools.Filters
             if (_filter.CanFilter && _filter.Enabled)
             {
                 RemoveFilter();
-                if (_filter.GetType() == typeof(StrFilter))
-                    _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionContains, Type.Missing, criteria1);
-                if (_filter.GetType() == typeof(DateFilter))
+                try
                 {
-                    var flt = (DateFilter)_filter;
-                    var cultureinfo = System.Globalization.CultureInfo.InvariantCulture;
-                    _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
-                        flt.From.ToString(CellValue.DATE_FORMAT, cultureinfo), 
-                        flt.To.ToString(CellValue.DATE_FORMAT, cultureinfo));
+                    if (_filter.GetType() == typeof(StrFilter))
+                        _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionContains, Type.Missing, criteria1);
+                    if (_filter.GetType() == typeof(DateFilter))
+                    {
+                        var flt = (DateFilter) _filter;
+                        var cultureinfo = System.Globalization.CultureInfo.InvariantCulture;
+                        _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
+                            flt.From.ToString(CellValue.DATE_FORMAT, cultureinfo),
+                            flt.To.ToString(CellValue.DATE_FORMAT, cultureinfo));
+                    }
+                    if (_filter.GetType() == typeof(TimeFilter))
+                    {
+                        var flt = (TimeFilter) _filter;
+                        var cultureinfo = System.Globalization.CultureInfo.InvariantCulture;
+                        _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
+                            flt.From.ToString(CellValue.TIME_FORMAT, cultureinfo),
+                            flt.To.ToString(CellValue.TIME_FORMAT, cultureinfo));
+                    }
+                    if (_filter.GetType() == typeof(NumericFilter))
+                    {
+                        var flt = (NumericFilter) _filter;
+                        _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionIsBetween, Type.Missing,
+                            flt.From.ToString(), flt.To.ToString());
+                    }
                 }
-                if (_filter.GetType() == typeof(TimeFilter))
+                catch (Exception e)
                 {
-                    var flt = (TimeFilter)_filter;
-                    var cultureinfo = System.Globalization.CultureInfo.InvariantCulture;
-                    _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
-                        flt.From.ToString(CellValue.TIME_FORMAT, cultureinfo),
-                        flt.To.ToString(CellValue.TIME_FORMAT, cultureinfo));
+                    Debug.WriteLine("не удалось установить PivotFilter " + e.Message);
                 }
-                if (_filter.GetType() == typeof(NumericFilter))
-                {
-                    var flt = (NumericFilter)_filter;
-                    _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionIsBetween, Type.Missing,
-                        flt.From.ToString(), flt.To.ToString());
-                }
-
             }
         }
         public override void RemoveFilter()
