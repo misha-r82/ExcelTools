@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using Microsoft.Office.Interop.Excel;
 
@@ -25,15 +26,30 @@ namespace ExcelTools.Filters
                 break;
             }
         }
+
+        private void SetListFilter()
+        {
+            var tmp = (Excel.PivotItems)_pivField.PivotItems();
+            /*foreach (dynamic item in _pivField.PivotItems())
+            {
+                var pivItm = item as PivotItem;
+                pivItm.Visible = _filter.ValueList.Any(v => v.StrVal == pivItm.Value);
+            }  */
+        }
         public override void SetFilter(object criteria1, object criteria2)
         {
-            if (_filter.CanFilter && _filter.Enabled)
-            {
-                RemoveFilter();
-                try
+            RemoveFilter();
+             try
                 {
+                    if (_filter.IsListMode)
+                    {
+                        SetListFilter();
+                        return;
+                    }
                     if (_filter.GetType() == typeof(StrFilter))
-                        _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionContains, Type.Missing, criteria1);
+
+                            _pivField.PivotFilters.Add(XlPivotFilterType.xlCaptionContains, Type.Missing, criteria1);
+                        else SetListFilter();
                     if (_filter.GetType() == typeof(DateFilter))
                     {
                         var flt = (DateFilter) _filter;
@@ -61,7 +77,6 @@ namespace ExcelTools.Filters
                 {
                     Debug.WriteLine("не удалось установить PivotFilter " + e.Message);
                 }
-            }
         }
         public override void RemoveFilter()
         {
