@@ -15,7 +15,7 @@ namespace ExcelTools
         public string Name { get; }
         public CellValue[] ValueList { get; set; }
         private object[] _selectedValues;
-  protected virtual object Criteria1 { get; }
+        protected virtual object Criteria1 { get; }
         protected virtual object Criteria2 { get; }
         public FilterSetter Setter { get; set; }
         private bool _enabled;
@@ -105,7 +105,8 @@ namespace ExcelTools
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            SetFilter();
+            if (propertyName != "CanFilter")
+                SetFilter();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
