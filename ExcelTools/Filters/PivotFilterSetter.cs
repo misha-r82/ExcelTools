@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using Microsoft.Office.Interop.Excel;
@@ -8,6 +10,8 @@ namespace ExcelTools.Filters
 {
     public class PivotFilterSetter : FilterSetter
     {
+        public static string TIME_FORMAT = @"hh:mm";
+        public static string DATE_FORMAT { get; set; } = "dd.MM.yyyy";
         private PivotField _pivField;
         public PivotFilterSetter(FilterProto filter) : base(filter)
         {
@@ -29,12 +33,37 @@ namespace ExcelTools.Filters
 
         private void SetListFilter()
         {
-            var tmp = (Excel.PivotItems)_pivField.PivotItems();
-            /*foreach (dynamic item in _pivField.PivotItems())
+            var items = (PivotItems)_pivField.PivotItems();
+            var selValues = new List<string>();
+            var pivRng = (Range)_pivField.DataRange;
+            var fltVals = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
+            foreach (object cellobj in pivRng.Cells)
+            {
+                Range cellRng = (Range) cellobj;
+                var cell = new CellValue(cellRng);
+                if (fltVals.Contains(cell.XlVal))
+                    selValues.Add(cellRng.ToString());
+            }
+            /*if (_filter.GetType() == typeof(StrFilter) || _filter.GetType() == typeof(NumericFilter))
+            {
+                selValues = _filter.SelectedValues.Select(v => v.ToString()).ToArray();
+            }
+            else if (_filter.GetType() == typeof(DateFilter))
+            {
+                selValues = _filter.SelectedValues.OfType<CellValue>()
+                    .Select(v=>v.ValDate.ToString(DATE_FORMAT, CultureInfo.InvariantCulture)).ToArray();
+            }
+            else if (_filter.GetType() == typeof(TimeFilter))
+            {
+                selValues = _filter.SelectedValues.OfType<CellValue>()
+                    .Select(v=>v.ValTime.ToString(TIME_FORMAT, CultureInfo.InvariantCulture)).ToArray();
+            }*/
+            
+            foreach (dynamic item in items)
             {
                 var pivItm = item as PivotItem;
-                pivItm.Visible = _filter.ValueList.Any(v => v.StrVal == pivItm.Value);
-            }  */
+                pivItm.Visible = selValues.Contains(pivItm.Value);
+            }  
         }
         public override void SetFilter(object criteria1, object criteria2)
         {

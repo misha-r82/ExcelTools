@@ -18,37 +18,59 @@ namespace ExcelTools
         public static string DATE_FORMAT { get; set; } = "dd.MM.yyyy";
         private object _xlVal;
         private string _strVal;
+        private string _format;
+        private bool _dateAsString;
         public CellValType Type { get; }
         public double ValDouble { get { return (double) _xlVal; } }
         public TimeSpan ValTime { get { return DateTime.FromOADate(ValDouble).TimeOfDay; } }
-        public DateTime ValDate { get { return (DateTime) _xlVal; } }
+        public DateTime ValDate {
+            get
+            {
+                if (!_dateAsString) return (DateTime) _xlVal;
+                DateTime tmp;
+                if (DateTime.TryParseExact(_xlVal.ToString(), _format, CultureInfo.InvariantCulture, 
+                    DateTimeStyles.None, out tmp)) return tmp;
+                return new DateTime();
+            } }
                         
 
         public CellValue(Range rng)
         {
-            string format = rng.NumberFormat.ToString();
+            _format = rng.NumberFormat.ToString();
             _xlVal = rng.Value;
             if (_xlVal == null)
             {
-                if (IsNumericFormat(format)) Type = CellValType.Numeric;
-                else if (IsDateFormat(format)) Type = CellValType.Date;
-                else if (IsTimeFormat(format)) Type = CellValType.Time;
+                if (IsNumericFormat(_format)) Type = CellValType.Numeric;
+                else if (IsDateFormat(_format)) Type = CellValType.Date;
+                else if (IsTimeFormat(_format)) Type = CellValType.Time;
                 else Type = CellValType.String;
             }
             else
             {
                 if (_xlVal is string)
-                    Type = CellValType.String;
+                {
+                    DateTime tmp;
+                    if (IsDateFormat(_format) && DateTime.TryParseExact(_xlVal.ToString(), 
+                        _format, CultureInfo.InvariantCulture, DateTimeStyles.None, out tmp))
+                    {
+                        Type = CellValType.Date;
+                        _dateAsString = true;
+                    }
+                        
+                    else Type = CellValType.String;
+                }
+                    
+                    
                 else if (_xlVal is double)
                 {
-                    if (IsTimeFormat(format)) Type = CellValType.Time;
+                    if (IsTimeFormat(_format)) Type = CellValType.Time;
                     else Type = CellValType.Numeric;
                 }
                 else if (_xlVal is DateTime)
                     Type = CellValType.Date;
             }
         }
-
+        
         private bool IsTimeFormat(string cellFormat)
         {
             return cellFormat.Contains('h');
@@ -90,52 +112,60 @@ namespace ExcelTools
                         case CellValType.Numeric:
                             return _xlVal.ToString();
                         case CellValType.Date:
-                            return ((DateTime) _xlVal).ToString(DATE_FORMAT);
+                            return _dateAsString ? _xlVal.ToString() : ((DateTime)_xlVal).ToString(_format);
                         case CellValType.Time:
                             double timeDouble = (double)_xlVal;
                             TimeSpan time = DateTime.FromOADate(timeDouble).TimeOfDay;
-                            return time.ToString(TIME_FORMAT);
+                            return time.ToString(_format);
 
                 }
                 return "";
             }
             set
             {
-                switch (Type)
-                {
-                    case CellValType.String: _xlVal = value; break;
-                    case CellValType.Numeric:
-                        double tmp = 0;
-                        if (double.TryParse(value, out tmp))
-                            _xlVal = tmp;
-                        else _xlVal = null;
-                        break;
-                    case CellValType.Date:
-                        if (value != null)
-                        {
-                            DateTime date = new DateTime();
-                            if (DateTime.TryParseExact(value, DATE_FORMAT, CultureInfo.InvariantCulture,
-                                DateTimeStyles.None, out date))
-                                _xlVal = date;
+                if (_dateAsString)
+                    _xlVal = value;
+                else
+                    switch (Type)
+                    {
+                        case CellValType.String:
+                            if (_dateAsString)
+                                _xlVal = value;
+                            break;
+                        case CellValType.Numeric:
+                            double tmp = 0;
+                            if (double.TryParse(value, out tmp))
+                                _xlVal = tmp;
                             else _xlVal = null;
-                        }
-                        else _xlVal = null;
-                        break;
-                    case CellValType.Time:
-                        if (value != null)
-                        {
-                            TimeSpan time = new TimeSpan();
-                            if (TimeSpan.TryParseExact(value, TIME_FORMAT, null, out time))
-                                _xlVal = new DateTime(time.Ticks).ToOADate();
+                            break;
+                        case CellValType.Date:
+                            if (value != null)
+                            {
+                                DateTime date = new DateTime();
+                                if (DateTime.TryParseExact(value, _format, CultureInfo.InvariantCulture,
+                                    DateTimeStyles.None, out date))
+                                    _xlVal = date;
+                                else _xlVal = null;
+                            }
                             else _xlVal = null;
-                        }
-                        else _xlVal = null;
-                        break;
-                }
+                            break;
+                        case CellValType.Time:
+                            if (value != null)
+                            {
+                                TimeSpan time = new TimeSpan();
+                                if (TimeSpan.TryParseExact(value, _format, null, out time))
+                                    _xlVal = new DateTime(time.Ticks).ToOADate();
+                                else _xlVal = null;
+                            }
+                            else _xlVal = null;
+                            break;
+                    }
+
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(XlVal));
             }
         }
+
 
         public override string ToString()
         {
