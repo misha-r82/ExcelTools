@@ -51,7 +51,7 @@ namespace ExcelTools.Filters
                 {
                     if (_filter.IsListMode)
                     {
-                        if (_filter.SelectedValues.Length == 0) return;
+                        if (_filter.SelectedValues == null || _filter.SelectedValues.Length == 0) return;
                         var strArr = _filter.SelectedValues.Select(v => v.ToString()).ToArray();
                         _rng.CurrentRegion.AutoFilter(_coluumn, strArr, XlAutoFilterOperator.xlFilterValues,
                             Type.Missing, true);

@@ -153,7 +153,7 @@ namespace ExcelTools
                             if (value != null)
                             {
                                 TimeSpan time = new TimeSpan();
-                                if (TimeSpan.TryParseExact(value, _format, null, out time))
+                                if (TimeSpan.TryParseExact(value, TIME_FORMAT, null, out time))
                                     _xlVal = new DateTime(time.Ticks).ToOADate();
                                 else _xlVal = null;
                             }

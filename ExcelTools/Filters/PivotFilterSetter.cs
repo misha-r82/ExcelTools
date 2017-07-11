@@ -36,13 +36,14 @@ namespace ExcelTools.Filters
             var items = (PivotItems)_pivField.PivotItems();
             var selValues = new List<string>();
             var pivRng = (Range)_pivField.DataRange;
-            var fltVals = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
+            //var fltVals = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
             foreach (object cellobj in pivRng.Cells)
             {
                 Range cellRng = (Range) cellobj;
                 var cell = new CellValue(cellRng);
-                if (fltVals.Contains(cell.XlVal))
-                    selValues.Add(cellRng.ToString());
+                Debug.WriteLine(cellRng.NumberFormat + " - " + cellRng.Value2);
+                //if (fltVals.Contains(cell.XlVal))
+                //    selValues.Add(cellRng.ToString());
             }
             /*if (_filter.GetType() == typeof(StrFilter) || _filter.GetType() == typeof(NumericFilter))
             {
@@ -62,6 +63,7 @@ namespace ExcelTools.Filters
             foreach (dynamic item in items)
             {
                 var pivItm = item as PivotItem;
+                pivItm.
                 pivItm.Visible = selValues.Contains(pivItm.Value);
             }  
         }
@@ -73,7 +75,7 @@ namespace ExcelTools.Filters
                     if (_filter.IsListMode)
                     {
                         SetListFilter();
-                        return;
+                        return; 
                     }
                     if (_filter.GetType() == typeof(StrFilter))
 
