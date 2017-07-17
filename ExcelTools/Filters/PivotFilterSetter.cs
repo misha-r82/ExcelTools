@@ -11,8 +11,9 @@ namespace ExcelTools.Filters
     public class PivotFilterSetter : FilterSetter
     {
         public static string TIME_FORMAT = @"hh:mm";
-        public static string DATE_FORMAT { get; set; } = "dd.MM.yyyy";
+        public static string DATE_FORMAT { get; set; } = "M/d/yyyy";
         private PivotField _pivField;
+        public static CultureInfo cultureinfo = CultureInfo.InvariantCulture;
         public PivotFilterSetter(FilterProto filter) : base(filter)
         {
             filter.CanFilter = false;
@@ -33,15 +34,27 @@ namespace ExcelTools.Filters
 
         private void SetListFilter()
         {
-            /*
+            
             var items = (PivotItems)_pivField.PivotItems();
-            var selected = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
+            object[] selected = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
+            if (_pivField.DataType == XlPivotFieldDataType.xlDate)
+            {
+                for (int i = 0; i < selected.Length; i++)
+                {
+                    selected[i] = (_filter.GetType() == typeof(DateFilter))
+                        ? ((DateTime) selected[i]).ToString(DATE_FORMAT, cultureinfo)
+                        : ((DateTime) selected[i]).ToString(TIME_FORMAT, cultureinfo);
+                }
+                
+            }
+            
+            
             foreach (dynamic item in items)
             {
                 var pivItm = item as PivotItem;
                 //var pivRng = pivItm.ChildItems;
                 pivItm.Visible = selected.Any(v => v.Equals(pivItm.Value));
-            }  */
+            }
         }
         public override void SetFilter(object criteria1, object criteria2)
         {
@@ -60,7 +73,6 @@ namespace ExcelTools.Filters
                     if (_filter.GetType() == typeof(DateFilter))
                     {
                         var flt = (DateFilter) _filter;
-                        var cultureinfo = CultureInfo.InvariantCulture;
                         _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
                             flt.From.ToString(CellValue.DATE_FORMAT, cultureinfo),
                             flt.To.ToString(CellValue.DATE_FORMAT, cultureinfo));
