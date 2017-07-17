@@ -10,7 +10,7 @@ namespace ExcelTools.Filters
 {
     public class PivotFilterSetter : FilterSetter
     {
-        public static string TIME_FORMAT = @"hh:mm";
+        public static string TIME_FORMAT = @"hh:mm tt";
         public static string DATE_FORMAT { get; set; } = "M/d/yyyy";
         private PivotField _pivField;
         public static CultureInfo cultureinfo = CultureInfo.InvariantCulture;
@@ -47,12 +47,6 @@ namespace ExcelTools.Filters
                 }
                 
             }
-            else if (_filter.GetType() == typeof(TimeFilter))
-            {
-                selValues = _filter.SelectedValues.OfType<CellValue>()
-                    .Select(v=>v.ValTime.ToString(TIME_FORMAT, CultureInfo.InvariantCulture)).ToArray();
-            }*/
-            
             foreach (dynamic item in items)
             {
                 var pivItm = item as PivotItem;

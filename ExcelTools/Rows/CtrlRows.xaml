@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ExcelTools"
              xmlns:converters="clr-namespace:ExcelTools.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:datePiecker="clr-namespace:DatePiecker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -73,9 +74,10 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding ColName}" VerticalAlignment="Center"/>
-                            <xctk:DateTimePicker Value="{Binding Value.XlVal}" Format="Custom"
+                            <datePiecker:CtrlDatePiecker DataContext="{Binding Value.XlVal, StringFormat={x:Static local:CellValue.DATE_FORMAT}}"/>
+                            <!--<xctk:DateTimePicker Value="{Binding Value.XlVal}" Format="Custom"
                              FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
-                             TimePickerAllowSpin="False"/>
+                             TimePickerAllowSpin="False"/>-->
                         </StackPanel>
                         <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
                     </Grid>

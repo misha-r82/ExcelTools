@@ -3,6 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExcelTools"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:ctrlDate="clr-namespace:DatePiecker"
                     xmlns:converters="clr-namespace:ExcelTools.Converters">
     <DataTemplate x:Key="BaseFilterTemplate">
         <Grid>
@@ -72,9 +73,10 @@
     </DataTemplate>
     <DataTemplate x:Key="DateFilterTemplate">
         <StackPanel Orientation="Horizontal">
-            <xctk:DateTimePicker Value="{Binding From, UpdateSourceTrigger=LostFocus}" Format="Custom"
+            <ctrlDate:CtrlDatePiecker DataContext="{Binding From, UpdateSourceTrigger=LostFocus, StringFormat={x:Static local:CellValue.DATE_FORMAT}}"/>
+            <!--<xctk:DateTimePicker Value="{Binding From, UpdateSourceTrigger=LostFocus}" Format="Custom"
                              FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
-                                 Width="100" VerticalAlignment="Top"/>
+                                 Width="100" VerticalAlignment="Top"/>-->
             <TextBlock Text=" и "/>
             <xctk:DateTimePicker Value="{Binding To, UpdateSourceTrigger=LostFocus}"   Format="Custom"
                              FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
