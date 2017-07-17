@@ -34,18 +34,18 @@ namespace ExcelTools.Filters
         private void SetListFilter()
         {
             var items = (PivotItems)_pivField.PivotItems();
-            var selValues = new List<string>();
-            var pivRng = (Range)_pivField.DataRange;
-            //var fltVals = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
-            foreach (object cellobj in pivRng.Cells)
-            {
-                Range cellRng = (Range) cellobj;
-                var cell = new CellValue(cellRng);
-                Debug.WriteLine(cellRng.NumberFormat + " - " + cellRng.Value2);
-                //if (fltVals.Contains(cell.XlVal))
-                //    selValues.Add(cellRng.ToString());
-            }
-            /*if (_filter.GetType() == typeof(StrFilter) || _filter.GetType() == typeof(NumericFilter))
+            var selValues = new string[0];
+            //var pivRng = (Range)_pivField.DataRange;
+            ////var fltVals = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
+            //foreach (object cellobj in pivRng.Cells)
+            //{
+            //    Range cellRng = (Range) cellobj;
+            //    var cell = new CellValue(cellRng);
+            //    Debug.WriteLine(cellRng.NumberFormat + " - " + cellRng.Value2);
+            //    //if (fltVals.Contains(cell.XlVal))
+            //    //    selValues.Add(cellRng.ToString());
+            //}
+            if (_filter.GetType() == typeof(StrFilter) || _filter.GetType() == typeof(NumericFilter))
             {
                 selValues = _filter.SelectedValues.Select(v => v.ToString()).ToArray();
             }
@@ -58,12 +58,11 @@ namespace ExcelTools.Filters
             {
                 selValues = _filter.SelectedValues.OfType<CellValue>()
                     .Select(v=>v.ValTime.ToString(TIME_FORMAT, CultureInfo.InvariantCulture)).ToArray();
-            }*/
+            }
             
             foreach (dynamic item in items)
             {
                 var pivItm = item as PivotItem;
-                pivItm.
                 pivItm.Visible = selValues.Contains(pivItm.Value);
             }  
         }
