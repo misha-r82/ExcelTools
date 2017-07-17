@@ -11,8 +11,9 @@ namespace ExcelTools.Filters
     public class PivotFilterSetter : FilterSetter
     {
         public static string TIME_FORMAT = @"hh:mm";
-        public static string DATE_FORMAT { get; set; } = "dd.MM.yyyy";
+        public static string DATE_FORMAT { get; set; } = "M/d/yyyy";
         private PivotField _pivField;
+        public static CultureInfo cultureinfo = CultureInfo.InvariantCulture;
         public PivotFilterSetter(FilterProto filter) : base(filter)
         {
             filter.CanFilter = false;
@@ -33,38 +34,31 @@ namespace ExcelTools.Filters
 
         private void SetListFilter()
         {
+            
             var items = (PivotItems)_pivField.PivotItems();
-            var selValues = new string[0];
-            //var pivRng = (Range)_pivField.DataRange;
-            ////var fltVals = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
-            //foreach (object cellobj in pivRng.Cells)
-            //{
-            //    Range cellRng = (Range) cellobj;
-            //    var cell = new CellValue(cellRng);
-            //    Debug.WriteLine(cellRng.NumberFormat + " - " + cellRng.Value2);
-            //    //if (fltVals.Contains(cell.XlVal))
-            //    //    selValues.Add(cellRng.ToString());
-            //}
-            if (_filter.GetType() == typeof(StrFilter) || _filter.GetType() == typeof(NumericFilter))
+            object[] selected = _filter.SelectedValues.OfType<CellValue>().Select(v => v.XlVal).ToArray();
+            if (_pivField.DataType == XlPivotFieldDataType.xlDate)
             {
-                selValues = _filter.SelectedValues.Select(v => v.ToString()).ToArray();
-            }
-            else if (_filter.GetType() == typeof(DateFilter))
-            {
-                selValues = _filter.SelectedValues.OfType<CellValue>()
-                    .Select(v=>v.ValDate.ToString(DATE_FORMAT, CultureInfo.InvariantCulture)).ToArray();
+                for (int i = 0; i < selected.Length; i++)
+                {
+                    selected[i] = (_filter.GetType() == typeof(DateFilter))
+                        ? ((DateTime) selected[i]).ToString(DATE_FORMAT, cultureinfo)
+                        : ((DateTime) selected[i]).ToString(TIME_FORMAT, cultureinfo);
+                }
+                
             }
             else if (_filter.GetType() == typeof(TimeFilter))
             {
                 selValues = _filter.SelectedValues.OfType<CellValue>()
                     .Select(v=>v.ValTime.ToString(TIME_FORMAT, CultureInfo.InvariantCulture)).ToArray();
-            }
+            }*/
             
             foreach (dynamic item in items)
             {
                 var pivItm = item as PivotItem;
-                pivItm.Visible = selValues.Contains(pivItm.Value);
-            }  
+                //var pivRng = pivItm.ChildItems;
+                pivItm.Visible = selected.Any(v => v.Equals(pivItm.Value));
+            }
         }
         public override void SetFilter(object criteria1, object criteria2)
         {
@@ -83,7 +77,6 @@ namespace ExcelTools.Filters
                     if (_filter.GetType() == typeof(DateFilter))
                     {
                         var flt = (DateFilter) _filter;
-                        var cultureinfo = System.Globalization.CultureInfo.InvariantCulture;
                         _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
                             flt.From.ToString(CellValue.DATE_FORMAT, cultureinfo),
                             flt.To.ToString(CellValue.DATE_FORMAT, cultureinfo));
@@ -91,7 +84,7 @@ namespace ExcelTools.Filters
                     if (_filter.GetType() == typeof(TimeFilter))
                     {
                         var flt = (TimeFilter) _filter;
-                        var cultureinfo = System.Globalization.CultureInfo.InvariantCulture;
+                        var cultureinfo = CultureInfo.InvariantCulture;
                         _pivField.PivotFilters.Add(XlPivotFilterType.xlDateBetween, Type.Missing,
                             flt.From.ToString(CellValue.TIME_FORMAT, cultureinfo),
                             flt.To.ToString(CellValue.TIME_FORMAT, cultureinfo));
