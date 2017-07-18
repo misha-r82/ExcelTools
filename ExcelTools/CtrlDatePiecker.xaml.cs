@@ -31,7 +31,11 @@ namespace DatePiecker
             button.Width = Double.NaN;
             button.Height = Double.NaN;
             button.Template  = (ControlTemplate)FindResource("btnTemplate");
+        }
 
+        private void Datepicker_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            datepicker.Focus();
         }
     }
 }
