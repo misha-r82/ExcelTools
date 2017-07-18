@@ -1,14 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExcelTools"
-                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+                    xmlns:ctrlDate="clr-namespace:DatePiecker">
     <Style TargetType="{x:Type Control}" x:Key="ElementStyle">
         <Setter Property="Margin" Value="3,3,0,3"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
     <Style TargetType="TextBox" BasedOn="{StaticResource ElementStyle}"/>
-    <Style TargetType="xctk:DateTimePicker" BasedOn="{StaticResource ElementStyle}"/>
     <Style TargetType="TextBlock" x:Key="TextBlockStyle">
         <Setter Property="Margin" Value="3,3,0,3"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -22,5 +21,7 @@
     <Style TargetType="ListBox">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
-
+        <Style TargetType="ctrlDate:CtrlDatePiecker" BasedOn="{StaticResource ElementStyle}">
+            <Setter Property="Height" Value="22"/>
+        </Style>
 </ResourceDictionary>
