@@ -13,7 +13,7 @@ namespace ExcelTools {
     
     
     /// 
-    [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(6)]
+    [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(3)]
     [global::System.Security.Permissions.PermissionSetAttribute(global::System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
     public sealed partial class Лист2 : Microsoft.Office.Tools.Excel.WorksheetBase {
         

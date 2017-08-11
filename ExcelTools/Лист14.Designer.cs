@@ -13,11 +13,11 @@ namespace ExcelTools {
     
     
     /// 
-    [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(2)]
+    [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(7)]
     [global::System.Security.Permissions.PermissionSetAttribute(global::System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
-    public sealed partial class Лист3 : Microsoft.Office.Tools.Excel.WorksheetBase {
+    public sealed partial class Лист1 : Microsoft.Office.Tools.Excel.WorksheetBase {
         
-        internal Microsoft.Office.Tools.Excel.ListObject Таблица1;
+        internal Microsoft.Office.Tools.Excel.ListObject Таблица3;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         private global::System.Object missing = global::System.Type.Missing;
@@ -25,8 +25,8 @@ namespace ExcelTools {
         /// 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Лист3(global::Microsoft.Office.Tools.Excel.Factory factory, global::System.IServiceProvider serviceProvider) : 
-                base(factory, serviceProvider, "Лист3", "Лист3") {
+        public Лист1(global::Microsoft.Office.Tools.Excel.Factory factory, global::System.IServiceProvider serviceProvider) : 
+                base(factory, serviceProvider, "Лист1", "Лист1") {
         }
         
         /// 
@@ -35,7 +35,7 @@ namespace ExcelTools {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         protected override void Initialize() {
             base.Initialize();
-            Globals.Лист3 = this;
+            Globals.Лист1 = this;
             global::System.Windows.Forms.Application.EnableVisualStyles();
             this.InitializeCachedData();
             this.InitializeControls();
@@ -116,7 +116,7 @@ namespace ExcelTools {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void BeginInitialization() {
             this.BeginInit();
-            this.Таблица1.BeginInit();
+            this.Таблица3.BeginInit();
         }
         
         /// 
@@ -124,7 +124,7 @@ namespace ExcelTools {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void EndInitialization() {
-            this.Таблица1.EndInit();
+            this.Таблица3.EndInit();
             this.EndInit();
         }
         
@@ -133,7 +133,7 @@ namespace ExcelTools {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void InitializeControls() {
-            this.Таблица1 = Globals.Factory.CreateListObject(null, null, "Лист3:Таблица1", "Таблица1", this);
+            this.Таблица3 = Globals.Factory.CreateListObject(null, null, "Лист1:Таблица3", "Таблица3", this);
         }
         
         /// 
@@ -142,9 +142,12 @@ namespace ExcelTools {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void InitializeComponents() {
             // 
-            // Таблица1
+            // Таблица3
             // 
-            this.Таблица1.DefaultDataSourceUpdateMode = System.Windows.Forms.DataSourceUpdateMode.Never;
+            this.Таблица3.DefaultDataSourceUpdateMode = System.Windows.Forms.DataSourceUpdateMode.Never;
+            // 
+            // Лист1
+            // 
         }
         
         /// 
@@ -159,22 +162,22 @@ namespace ExcelTools {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "14.0.0.0")]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         protected override void OnShutdown() {
-            this.Таблица1.Dispose();
+            this.Таблица3.Dispose();
             base.OnShutdown();
         }
     }
     
     internal sealed partial class Globals {
         
-        private static Лист3 _Лист3;
+        private static Лист1 _Лист1;
         
-        internal static Лист3 Лист3 {
+        internal static Лист1 Лист1 {
             get {
-                return _Лист3;
+                return _Лист1;
             }
             set {
-                if ((_Лист3 == null)) {
-                    _Лист3 = value;
+                if ((_Лист1 == null)) {
+                    _Лист1 = value;
                 }
                 else {
                     throw new System.NotSupportedException();
