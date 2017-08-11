@@ -180,6 +180,12 @@
     <Compile Include="WpfCtrl.xaml.cs">
       <DependentUpon>WpfCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Лист15.cs">
+      <DependentUpon>ExcelTools.xltx</DependentUpon>
+    </Compile>
+    <Compile Include="Лист15.Designer.cs">
+      <DependentUpon>Лист15.Designer.xml</DependentUpon>
+    </Compile>
     <Compile Include="Лист21.cs">
       <DependentUpon>ExcelTools.xltx</DependentUpon>
     </Compile>
@@ -336,6 +342,11 @@
       <DependentUpon>Лист61.cs</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Лист15.Designer.xml">
+      <DependentUpon>Лист15.cs</DependentUpon>
+    </None>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -377,15 +388,16 @@
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="ExcelTools.xltx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\Office16\Excel.exe" DebugInfoCommandLine="/t /x &quot;[$OUTPUT]ExcelTools.xltx&quot;" />
+        <ProjectProperties HostName="ExcelTools.xltx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLT" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files\Microsoft Office\Office16\Excel.exe" DebugInfoCommandLine="/t /x &quot;[$OUTPUT]ExcelTools.xltx&quot;" />
         <Host Name="Excel Document" Path=".\ExcelTools.xltx" GeneratedCodeNamespace="ExcelTools">
           <HostItem Name="ThisWorkbook" Code="ThisWorkbook.cs" CanonicalName="ThisWorkbook" Blueprint="ThisWorkbook.Designer.xml" GeneratedCode="ThisWorkbook.Designer.cs" />
+          <HostItem Name="Лист1" Code="Лист15.cs" CanonicalName="Лист1" DisplayName="остатки по абонментам" Blueprint="Лист15.Designer.xml" GeneratedCode="Лист15.Designer.cs" />
           <HostItem Name="Лист2" Code="Лист21.cs" CanonicalName="Лист2" DisplayName="касса" Blueprint="Лист21.Designer.xml" GeneratedCode="Лист21.Designer.cs" />
           <HostItem Name="Лист3" Code="Лист31.cs" CanonicalName="Лист3" DisplayName="занятия" Blueprint="Лист31.Designer.xml" GeneratedCode="Лист31.Designer.cs" />
           <HostItem Name="Лист4" Code="Лист4.cs" CanonicalName="Лист4" DisplayName="клиенты" Blueprint="Лист4.Designer.xml" GeneratedCode="Лист4.Designer.cs" />
-          <HostItem Name="Лист5" Code="Лист51.cs" CanonicalName="Лист5" DisplayName="Лист2" Blueprint="Лист51.Designer.xml" GeneratedCode="Лист51.Designer.cs" />
+          <HostItem Name="Лист5" Code="Лист51.cs" CanonicalName="Лист5" DisplayName="поступления" Blueprint="Лист51.Designer.xml" GeneratedCode="Лист51.Designer.cs" />
           <HostItem Name="Лист6" Code="Лист61.cs" CanonicalName="Лист6" DisplayName="сводная занятия" Blueprint="Лист61.Designer.xml" GeneratedCode="Лист61.Designer.cs" />
-          <HostItem Name="Лист7" Code="Лист7.cs" CanonicalName="Лист7" DisplayName="Лист4" Blueprint="Лист7.Designer.xml" GeneratedCode="Лист7.Designer.cs" />
+          <HostItem Name="Лист7" Code="Лист7.cs" CanonicalName="Лист7" DisplayName="абонименты" Blueprint="Лист7.Designer.xml" GeneratedCode="Лист7.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>
