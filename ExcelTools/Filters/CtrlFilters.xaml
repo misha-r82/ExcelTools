@@ -30,7 +30,7 @@
             
             <Button x:Name="button" Margin="10" VerticalAlignment="Top" Width="45" Height="45" Click="button_Click">
                 <Button.Content>
-                    <Image Source="../img/plus.png"/>
+                    <Image Source="../img/plus.png" ToolTip="Добавить фильтр"/>
                 </Button.Content>
             </Button>
         </StackPanel>

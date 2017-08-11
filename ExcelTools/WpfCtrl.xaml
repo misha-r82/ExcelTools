@@ -35,7 +35,7 @@
         <TabItem Header="Настройки">
             <StackPanel Orientation="Horizontal" Height="50">
                 <TextBlock Text="Строк автоподстановки" ToolTip="Количество строк, используемых для формирования списка автоподстановки для поля"/>
-                <xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}" />
+                <!--<xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}" />-->
             </StackPanel>
         </TabItem>
     </TabControl>

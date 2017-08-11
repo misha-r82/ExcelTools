@@ -9,12 +9,12 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ControlTemplate x:Key="btnTemplate">
-                <Image Source="img/calendar.png"/>
+                <Image Source="img/calendar.png" Width="16" Height="16"/>
             </ControlTemplate>
         </ResourceDictionary>
 
     </UserControl.Resources>
     <Grid>
-        <DatePicker Name="datepicker" SelectedDate="{Binding .}"  Loaded="datepicker_Loaded"/>
+        <DatePicker Name="datepicker" SelectedDate="{Binding .}" MouseEnter="Datepicker_OnMouseEnter"  Loaded="datepicker_Loaded"/>
     </Grid>
 </UserControl>
