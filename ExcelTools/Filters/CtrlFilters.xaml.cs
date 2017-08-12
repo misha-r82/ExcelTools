@@ -31,7 +31,8 @@ namespace ExcelTools
         }
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            FilterCollection.AddFilter(Current.CurRegion.ActiveCell);           
+            if(Current.CurRegion.IsWorkSheet)
+                FilterCollection.AddFilter(Current.CurRegion.ActiveCell);           
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
