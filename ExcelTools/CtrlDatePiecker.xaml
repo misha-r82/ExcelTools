@@ -16,6 +16,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <DatePicker Name="datepicker" SelectedDate="{Binding Date, ElementName=ctrlDate, Mode=TwoWay}" Loaded="datepicker_Loaded"/>
+        <DatePicker Name="datepicker" SelectedDate="{Binding Date, ElementName=ctrlDate,
+            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Loaded="datepicker_Loaded"/>
     </Grid>
 </UserControl>

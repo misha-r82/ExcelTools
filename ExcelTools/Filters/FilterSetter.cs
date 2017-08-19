@@ -52,7 +52,8 @@ namespace ExcelTools.Filters
                     if (_filter.IsListMode)
                     {
                         if (_filter.SelectedValues == null || _filter.SelectedValues.Length == 0) return;
-                        var strArr = _filter.SelectedValues.Select(v => v.ToString()).ToArray();
+                        var strArr = _filter.SelectedValues.OfType<CellValue>()
+                        .Select(v => v.ValDate.ToString(DateFilter.DATE_LIST_FORMAT)).ToArray();
                         _rng.CurrentRegion.AutoFilter(_coluumn, strArr, XlAutoFilterOperator.xlFilterValues,
                             Type.Missing, true);
                         return;

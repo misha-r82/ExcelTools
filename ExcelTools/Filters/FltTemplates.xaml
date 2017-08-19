@@ -54,10 +54,8 @@
             <StackPanel Orientation="Horizontal">
             <ctrlDate:CtrlDatePiecker Date ="{Binding From, UpdateSourceTrigger=LostFocus, 
                 StringFormat={x:Static local:CellValue.DATE_FORMAT}}"  VerticalAlignment="Top"/>
-                <DatePicker SelectedDate="{Binding From, UpdateSourceTrigger=LostFocus, 
-                StringFormat={x:Static local:CellValue.DATE_FORMAT}}"  VerticalAlignment="Top"/>
                 <TextBlock Text=" и "/>
-            <ctrlDate:CtrlDatePiecker DataContext="{Binding To, UpdateSourceTrigger=LostFocus,
+            <ctrlDate:CtrlDatePiecker Date ="{Binding To, UpdateSourceTrigger=LostFocus,
                 StringFormat={x:Static local:CellValue.DATE_FORMAT}}"  VerticalAlignment="Top"/>
 
         </StackPanel>

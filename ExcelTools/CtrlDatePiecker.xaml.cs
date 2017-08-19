@@ -29,16 +29,9 @@ namespace DatePiecker
         static CtrlDatePiecker()
         {           
             DateProperty = DependencyProperty.Register(
-            "Date",
-            typeof(DateTime),
-            typeof(CtrlDatePiecker), new PropertyMetadata(DateTime.Now, new PropertyChangedCallback(OnDateChanged)));
-        }
-
-        private static void OnDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            /*CtrlDatePiecker uc = d as CtrlDatePiecker;
-            if (e.NewValue == null) return;
-            uc.datepicker.SelectedDate = (DateTime)e.NewValue;*/
+            "Date", typeof(DateTime),
+            typeof(CtrlDatePiecker), new FrameworkPropertyMetadata
+            { BindsTwoWayByDefault = true, });
         }
         public DateTime Date
         {
@@ -50,10 +43,10 @@ namespace DatePiecker
 
         private void datepicker_Loaded(object sender, RoutedEventArgs e)
         {
-            /*Button button = (Button)datepicker.Template.FindName("PART_Button", datepicker);
+            Button button = (Button)datepicker.Template.FindName("PART_Button", datepicker);
             button.Width = Double.NaN;
             button.Height = Double.NaN;
-            button.Template = (ControlTemplate)FindResource("btnTemplate");*/
+            button.Template = (ControlTemplate)FindResource("btnTemplate");
         }
     }
 }

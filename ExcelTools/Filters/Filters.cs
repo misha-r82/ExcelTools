@@ -83,6 +83,8 @@ namespace ExcelTools
     }
     class DateFilter : FilterProto
     {
+        public static string DATE_FORMAT = @"MM\/dd\/yyyy";
+        public static string DATE_LIST_FORMAT = @"dd\/MM\/yyyy";
         private DateTime _from;
         private DateTime _to;
         public override string Caption { get { return Name + " между"; } }
@@ -118,11 +120,11 @@ namespace ExcelTools
 
         protected override object Criteria1
         {
-            get { return string.Format(">={0}", From.ToString(@"MM\/dd\/yyyy")); }
+            get { return string.Format(">={0}", From.ToString(DATE_FORMAT)); }
         }
         protected override object Criteria2
         {
-            get { return string.Format("<={0}", To.ToString(@"MM\/dd\/yyyy")); }
+            get { return string.Format("<={0}", To.ToString(DATE_FORMAT)); }
         }
 
     }
