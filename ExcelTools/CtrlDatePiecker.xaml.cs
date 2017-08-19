@@ -25,17 +25,35 @@ namespace DatePiecker
             InitializeComponent();
 
         }
-        private void datepicker_Loaded(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)datepicker.Template.FindName("PART_Button", datepicker);
-            button.Width = Double.NaN;
-            button.Height = Double.NaN;
-            button.Template  = (ControlTemplate)FindResource("btnTemplate");
+        public static readonly DependencyProperty DateProperty;
+        static CtrlDatePiecker()
+        {           
+            DateProperty = DependencyProperty.Register(
+            "Date",
+            typeof(DateTime),
+            typeof(CtrlDatePiecker), new PropertyMetadata(DateTime.Now, new PropertyChangedCallback(OnDateChanged)));
         }
 
-        private void Datepicker_OnMouseEnter(object sender, MouseEventArgs e)
+        private static void OnDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            datepicker.Focus();
+            /*CtrlDatePiecker uc = d as CtrlDatePiecker;
+            if (e.NewValue == null) return;
+            uc.datepicker.SelectedDate = (DateTime)e.NewValue;*/
+        }
+        public DateTime Date
+        {
+            get { return (DateTime)GetValue(DateProperty); }
+            set { SetValue(DateProperty, value); }
+        }
+
+
+
+        private void datepicker_Loaded(object sender, RoutedEventArgs e)
+        {
+            /*Button button = (Button)datepicker.Template.FindName("PART_Button", datepicker);
+            button.Width = Double.NaN;
+            button.Height = Double.NaN;
+            button.Template = (ControlTemplate)FindResource("btnTemplate");*/
         }
     }
 }

@@ -74,10 +74,9 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding ColName}" VerticalAlignment="Center"/>
-                            <datePiecker:CtrlDatePiecker DataContext="{Binding Value.XlVal, StringFormat={x:Static local:CellValue.DATE_FORMAT}}"/>
-                            <!--<xctk:DateTimePicker Value="{Binding Value.XlVal}" Format="Custom"
-                             FormatString="{Binding Source={x:Static local:CellValue.DATE_FORMAT}}" 
-                             TimePickerAllowSpin="False"/>-->
+                            <datePiecker:CtrlDatePiecker Date="{Binding Value.XlVal, Mode=TwoWay, StringFormat={x:Static local:CellValue.DATE_FORMAT}}"/>
+                            <DatePicker SelectedDate="{Binding Value.XlVal, StringFormat={x:Static local:CellValue.DATE_FORMAT}}"/>
+
                         </StackPanel>
                         <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="1"/>
                     </Grid>
