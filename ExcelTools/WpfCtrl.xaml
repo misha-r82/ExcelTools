@@ -22,6 +22,11 @@
             
             
     </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TabControl TabStripPlacement="Left" Name="mainTab" >
         <TabItem Header="Строки" Name="tabRows" IsEnabled="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell}">
             <local:CtrlRows Visibility="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell, Converter={StaticResource BoolToVisConverter}}"/>
@@ -29,15 +34,17 @@
             <TabItem Header="Фильтры">
                  <local:CtrlFilters/>
             </TabItem>
-        <TabItem Header="Калькулятор" Name="tabCalk">
-            <local:CtrlCalk/>
-        </TabItem>
-        <TabItem Header="Настройки">
-            <StackPanel Orientation="Horizontal" Height="50">
-                <TextBlock Text="Строк автоподстановки" ToolTip="Количество строк, используемых для формирования списка автоподстановки для поля"/>
-                <!--<xctk:IntegerUpDown Minimum="0" Value="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}" />-->
-            </StackPanel>
-        </TabItem>
-    </TabControl>
+            <TabItem Header="Калькулятор" Name="tabCalk">
+                <local:CtrlCalk/>
+            </TabItem>
+        </TabControl>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3">
+            <TextBox Text="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}" Width="40"/>
+            <TextBlock Text="Число строк для выбора дначений" Margin="2"/>
+            <CheckBox Content="Все строки" VerticalAlignment="Center" Margin="2"/>
+        </StackPanel>
+        
+    </Grid>
+
         
 </UserControl>

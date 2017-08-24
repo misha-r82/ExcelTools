@@ -29,12 +29,12 @@ namespace ExcelTools.Filters
         private static void CurRegionOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (propertyChangedEventArgs.PropertyName != "ActiveRow") return;
-            if (!string.IsNullOrEmpty(_prewRangeAddr) && _prewRangeAddr != Current.CurRegion.CurRng.Address)
+            if (!string.IsNullOrEmpty(_prewRangeAddr) && _prewRangeAddr != Current.CurRegion.TblRange.CurRng.Address)
                 foreach (var filter in FilterCollection.Filters)
                     filter.OnRangeChange();
             
 
-            _prewRangeAddr = Current.CurRegion.CurRng.Address;
+            _prewRangeAddr = Current.CurRegion.TblRange.CurRng.Address;
             _prewSheetName = Current.CurRegion.ActiveWs.Name;
 
 

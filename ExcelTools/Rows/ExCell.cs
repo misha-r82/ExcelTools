@@ -52,13 +52,23 @@ namespace ExcelTools
                     _rng.Value = Value.XlVal;
             };
             var cr = Current.CurRegion;
-            Range colNameRng = (Range)cr.ActiveWs.Cells[cr.firstRow - 1, rng.Column];
+            Range colNameRng = (Range)cr.ActiveWs.Cells[cr.TblRange.FirstRow - 1, rng.Column];
             _colName = colNameRng.Value != null ? colNameRng.Value.ToString() : "";
             if (!setValList) return;
             int row = rng.Row;
+            int wnd = ValListSettings.Instance.RowWnd;
+            int from, to;
+            if (ValListSettings.Instance.AllRows)
+            { 
+                from = cr.TblRange.FirstRow;
+                to = cr.TblRange.LastRow;
+            }
+            else
+            {
+                from = row - wnd > cr.TblRange.FirstRow ? row - wnd : cr.TblRange.FirstRow;
+                to = row + wnd < cr.TblRange.LastRow ? row + wnd : cr.TblRange.LastRow;                
+            }
 
-            int from = row - cr.Wnd > cr.firstRow ? row - cr.Wnd : cr.firstRow;
-            int to = row + cr.Wnd < cr.lastRow ? row + cr.Wnd : cr.lastRow;
             var ws = rng.Worksheet;
             Range col = ws.Range[ws.Cells[from, rng.Column], ws.Cells[to, rng.Column]];
             var tmp = new List<ExCell>();
@@ -69,7 +79,36 @@ namespace ExcelTools
                 !string.IsNullOrEmpty(c.Value.ToString())).
                 Select(c=>c.Value)
                 .Distinct().ToArray();
-        }       
+        }
+
+        /*public static GetValList(CurRegion cr)
+        {
+            var cr = Current.CurRegion;
+            int row = rng.Row;
+            int wnd = ValListSettings.Instance.RowWnd;
+            int from, to;
+            if (ValListSettings.Instance.AllRows)
+            {
+                from = cr.TblRange.FirstRow;
+                to = cr.TblRange.LastRow;
+            }
+            else
+            {
+                from = row - wnd > cr.TblRange.firstRow ? row - wnd : cr.TblRange.firstRow;
+                to = row + wnd < cr.TblRange.lastRow ? row + wnd : cr.TblRange.lastRow;
+            }
+
+            var ws = rng.Worksheet;
+            Range col = ws.Range[ws.Cells[from, rng.Column], ws.Cells[to, rng.Column]];
+            var tmp = new List<ExCell>();
+            foreach (object r in col)
+                tmp.Add(new ExCell((Range)r, false));
+            ValList = tmp
+                .Where(c => c.Value.Type == Value.Type &&
+                            !string.IsNullOrEmpty(c.Value.ToString())).
+                Select(c => c.Value)
+                .Distinct().ToArray();
+        }*/
         public override string ToString()
         {
             return Value.StrVal;

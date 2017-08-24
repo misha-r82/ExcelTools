@@ -13,12 +13,16 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../Theme/StylesDic.Xaml"/>
                     <ResourceDictionary Source="../Theme/Theme.xaml"/>
                     <ResourceDictionary Source="FltTemplates.xaml"/>
+
                 </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
             </ResourceDictionary>
         </Grid.Resources>
         <StackPanel>
+            
             <ItemsControl Name="lstFilters" 
                           ItemsSource="{Binding Source={x:Static local:FilterCollection.Filters}}">
             <ItemsControl.ItemTemplate>
@@ -28,7 +32,7 @@
             </ItemsControl.ItemTemplate>
             </ItemsControl>
             
-            <Button x:Name="button" Margin="10" VerticalAlignment="Top" Width="45" Height="45" Click="button_Click">
+            <Button x:Name="button" Margin="6" VerticalAlignment="Top" Width="40" Height="40" Click="button_Click" HorizontalAlignment="Center">
                 <Button.Content>
                     <Image Source="../img/plus.png" ToolTip="Добавить фильтр"/>
                 </Button.Content>

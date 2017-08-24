@@ -83,8 +83,7 @@ namespace ExcelTools
     }
     class DateFilter : FilterProto
     {
-        public static string DATE_FORMAT = @"MM\/dd\/yyyy";
-        public static string DATE_LIST_FORMAT = @"dd\/MM\/yyyy";
+        public static string DATE_FORMAT = @"dd.MM.yyyy";
         private DateTime _from;
         private DateTime _to;
         public override string Caption { get { return Name + " между"; } }

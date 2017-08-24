@@ -36,10 +36,10 @@
         </Grid>
     </DataTemplate>
     <DataTemplate x:Key="StrFilterTemplate">
-            <TextBox Text="{Binding Patt, UpdateSourceTrigger=PropertyChanged, Delay=800}" HorizontalAlignment="Stretch"/>
+        <TextBox Text="{Binding Patt, UpdateSourceTrigger=PropertyChanged, Delay=800}" HorizontalAlignment="Stretch"  Margin="2"/>
     </DataTemplate>
     <DataTemplate x:Key="NumericFilterTemplate">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="2">
             <TextBox Text="{Binding From, Mode=TwoWay}" Width="110"/>
             <TextBlock Text=" и "/>
             <TextBox Text="{Binding To, Mode=TwoWay}" Width="110"/>

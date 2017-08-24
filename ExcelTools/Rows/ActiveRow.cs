@@ -33,7 +33,7 @@ namespace ExcelTools
                     PivotTable pTbl;
                     try
                     {
-                        pTbl = Current.CurRegion.CurRng.PivotTable;
+                        pTbl = Current.CurRegion.TblRange.CurRng.PivotTable;
                     }
                     catch (Exception e)
                     {

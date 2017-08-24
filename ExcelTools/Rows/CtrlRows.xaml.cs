@@ -38,17 +38,17 @@ namespace ExcelTools
                     curReg.CurRowNumInRng = 1;
                     break;
                 case "btnLast":
-                    curReg.CurRowNumInRng = curReg.CurRng.Rows.Count;
+                    curReg.CurRowNumInRng = curReg.TblRange.CurRng.Rows.Count;
                     break;
                 case "btnNext":
-                    if (curReg.CurRowNumInRng < curReg.CurRng.Rows.Count - 1) curReg.CurRowNumInRng++;
+                    if (curReg.CurRowNumInRng < curReg.TblRange.CurRng.Rows.Count - 1) curReg.CurRowNumInRng++;
                     break;
                 case "btnPrev":
                     if (curReg.CurRowNumInRng > 1) curReg.CurRowNumInRng--;
                     break;
                 case "btnNewRow":
                     var oldRow = curReg.ActiveRow;
-                    curReg.CurRowNumInRng = curReg.CurRng.Rows.Count;
+                    curReg.CurRowNumInRng = curReg.TblRange.CurRng.Rows.Count;
                     for (int i = 0; i < oldRow.ExCells.Length; i++)
                         if (oldRow.ExCells[i].IsSelected)
                             curReg.ActiveRow.ExCells[i].Rng.Value2 = oldRow.ExCells[i].Rng.Value2;

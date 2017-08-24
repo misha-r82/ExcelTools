@@ -6,11 +6,13 @@
         <Setter Property="Margin" Value="3,3,0,3"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FontSize" Value="12"/>
     </Style>
-    <Style TargetType="TextBox" BasedOn="{StaticResource ElementStyle}"/>
     <Style TargetType="TextBlock" x:Key="TextBlockStyle">
         <Setter Property="Margin" Value="3,3,0,3"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="Red" />
     </Style>
     <Style TargetType="Button" BasedOn="{StaticResource ElementStyle}"/>
     <Style TargetType="Button" BasedOn="{StaticResource ElementStyle}" x:Key="SqareButton">

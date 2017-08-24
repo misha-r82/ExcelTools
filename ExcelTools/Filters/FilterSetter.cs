@@ -29,7 +29,7 @@ namespace ExcelTools.Filters
         public TableFilterSetter(FilterProto filter, bool isFilterCreated) : base(filter)
         {
             _rng = Current.CurRegion.ActiveCell;
-            _coluumn = _rng.Column - Current.CurRegion.firstCol + 1;
+            _coluumn = _rng.Column - Current.CurRegion.TblRange.FirstCol + 1;
             var cols = Current.CurRegion.ActiveRow.ExCells;
             if (isFilterCreated) return;
             filter.CanFilter = false;
@@ -52,10 +52,24 @@ namespace ExcelTools.Filters
                     if (_filter.IsListMode)
                     {
                         if (_filter.SelectedValues == null || _filter.SelectedValues.Length == 0) return;
-                        var strArr = _filter.SelectedValues.OfType<CellValue>()
-                        .Select(v => v.ValDate.ToString(DateFilter.DATE_LIST_FORMAT)).ToArray();
+                        string[] strArr;
+                        if (_filter is DateFilter)
+                        {
+                            var orig = Current.CurRegion.ActiveWs.Application.ActiveWindow.AutoFilterDateGrouping;
+                            Current.CurRegion.ActiveWs.Application.ActiveWindow.AutoFilterDateGrouping = false;
+                            strArr = _filter.SelectedValues.OfType<CellValue>()
+                            .Select(v => v.ValDate.ToString(DateFilter.DATE_FORMAT)).ToArray();
+                            _rng.CurrentRegion.AutoFilter(_coluumn, strArr, XlAutoFilterOperator.xlFilterValues,
+                                Type.Missing, true);
+                            Current.CurRegion.ActiveWs.Application.ActiveWindow.AutoFilterDateGrouping = orig;
+                        }
+                        else
+                        {
+                         strArr= _filter.SelectedValues.OfType<CellValue>().Select(v => v.ToString()).ToArray();
                         _rng.CurrentRegion.AutoFilter(_coluumn, strArr, XlAutoFilterOperator.xlFilterValues,
-                            Type.Missing, true);
+                                Type.Missing, true);
+                        }
+
                         return;
                     }
                     if (criteria2 == null)

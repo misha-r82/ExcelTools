@@ -57,7 +57,7 @@ namespace ExcelTools
         public FilterProto()
         {
             var FilterRng = Current.CurRegion.ActiveCell;
-            int col = FilterRng.Column - Current.CurRegion.firstCol;
+            int col = FilterRng.Column - Current.CurRegion.TblRange.FirstCol;
             Setter = new TableFilterSetter(this, true);
             Name = Current.CurRegion.ActiveRow.ExCells[col].ColName;
             var tmpCell = new ExCell(FilterRng, true);

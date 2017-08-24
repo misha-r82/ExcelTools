@@ -17,8 +17,7 @@ namespace ExcelTools
         static Current()
         {
             CurRegion = new CurRegion();
-            CurRegion.Init();
-            CurRegion.Wnd = 50;
+            CurRegion.Init();            
         }
     }
     public class CurRegion : INotifyPropertyChanged
@@ -26,18 +25,15 @@ namespace ExcelTools
         public CurRegion()
         {
             ActiveWs.Application.SheetSelectionChange += ApplicationOnSheetSelectionChange;
-            ActiveWs.Application.SheetActivate += Application_SheetActivate;
-            
+            ActiveWs.Application.SheetActivate += Application_SheetActivate;            
         }
 
-        public int firstRow, lastRow, firstCol, lastCol;
         private Range _selection;
         private Range _activeCell;
-        private Range _curRng;
         private ActiveRow _activeRow;
-        private int _wnd;
         private bool _isWorkSheet;
         private bool _isTableCell;
+        private TblRange _tblRange;
 
 
         public Worksheet ActiveWs { get { return (Worksheet)ThisWorkbook.app.ActiveSheet; } }
@@ -64,18 +60,7 @@ namespace ExcelTools
                 return _activeRow;
             }
         }
-
-        public Range CurRng { get { return _curRng; } }
-        public int Wnd
-        {
-            get { return _wnd; }
-            set
-            {
-                if (value == _wnd) return;
-                _wnd = value;
-                OnPropertyChanged();
-            }
-        }
+        
         public bool IsTableCell
         {
             get { return _isTableCell; }
@@ -93,18 +78,23 @@ namespace ExcelTools
             {
                 if (!IsTableCell) return -1;
                 if (_activeRow == null) return -1;
-                return _activeRow.RowRng.Row - firstRow + 1;
+                return _activeRow.RowRng.Row - TblRange.FirstRow + 1;
             }
             set
             {
-                if (value > 0 && value <= lastRow)
+                if (value > 0 && value <= TblRange.LastRow)
                 {
-                    var cell = (Range)ActiveWs.Cells[value + firstRow -1, ActiveCell.Column];
+                    var cell = (Range)ActiveWs.Cells[value + TblRange.FirstRow -1, ActiveCell.Column];
                     cell.Select();
                 }
                 
                 OnPropertyChanged();
             }
+        }
+
+        public TblRange TblRange
+        {
+            get { return _tblRange; }
         }
 
         public void Init()
@@ -116,12 +106,7 @@ namespace ExcelTools
             if (!IsWorkSheet) return;
             _selection = (Range)ThisWorkbook.app.Selection;
             _activeCell = ThisWorkbook.app.ActiveCell;
-            _curRng = _activeCell.CurrentRegion;
-            Range firstCell = (Range)_curRng[2, 1];
-            firstRow = firstCell.Row;
-            firstCol = firstCell.Column;
-            lastRow = firstRow + _curRng.Rows.Count -2;
-            lastCol = firstCol + _curRng.Columns.Count;
+            _tblRange = new TblRange(_activeCell);
             _activeRow = new ActiveRow(ActiveCell);
             OnPropertyChanged(nameof(ExcelTools.ActiveRow));
             OnPropertyChanged(nameof(CurRowNumInRng));               
