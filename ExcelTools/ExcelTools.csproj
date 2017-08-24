@@ -132,7 +132,7 @@
     <Compile Include="ActionsPaneControl1.Designer.cs">
       <DependentUpon>ActionsPaneControl1.cs</DependentUpon>
     </Compile>
-    <Compile Include="CellListSource.cs" />
+    <Compile Include="ValListGenerator.cs" />
     <Compile Include="CtrlDatePiecker.xaml.cs">
       <DependentUpon>CtrlDatePiecker.xaml</DependentUpon>
     </Compile>

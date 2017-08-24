@@ -29,7 +29,8 @@
         </Grid.RowDefinitions>
         <TabControl TabStripPlacement="Left" Name="mainTab" >
         <TabItem Header="Строки" Name="tabRows" IsEnabled="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell}">
-            <local:CtrlRows Visibility="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell, Converter={StaticResource BoolToVisConverter}}"/>
+            <local:CtrlRows Visibility="{Binding Source={x:Static local:Current.CurRegion}, Path=IsTableCell, 
+                Converter={StaticResource BoolToVisConverter}}"/>
             </TabItem>
             <TabItem Header="Фильтры">
                  <local:CtrlFilters/>
@@ -39,9 +40,10 @@
             </TabItem>
         </TabControl>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3">
-            <TextBox Text="{Binding Source={x:Static local:Current.CurRegion}, Path=Wnd}" Width="40"/>
+            <TextBox Text="{Binding Source={x:Static local:ValListGenerator.Instance}, Path=Wnd}" Width="40"/>
             <TextBlock Text="Число строк для выбора дначений" Margin="2"/>
-            <CheckBox Content="Все строки" VerticalAlignment="Center" Margin="2"/>
+            <CheckBox Content="Все строки" IsChecked="{Binding Source={x:Static local:ValListGenerator.Instance}, Path=AllRows}" 
+                      VerticalAlignment="Center" Margin="2"/>
         </StackPanel>
         
     </Grid>
